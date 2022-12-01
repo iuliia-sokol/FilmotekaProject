@@ -2,14 +2,14 @@
   "name": "FilmotekaProject",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://MarkoVoitovych.github.io/FilmotekaProject",
+  "homepage": "https://iuliia-sokol.github.io/FilmotekaProject",
   "scripts": {
     "start": "parcel src/*.html",
     "build": "parcel build src/*.html --public-url /FilmotekaProject/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MarkoVoitovych/FilmotekaProject.git"
+    "url": "git+https://github.com/iuliia-sokol/FilmotekaProject.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
