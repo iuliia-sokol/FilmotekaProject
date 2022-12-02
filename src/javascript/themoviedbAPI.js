@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { API_KEY } from './envConsts';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 
 export class ThemoviedbAPI {
-  #API_KEY = '663bd5fd8d905b7ce2d57e9867d3492e';
+  #API_KEY = API_KEY;
   totalMovies = 0;
   query = '';
   genres = [];
