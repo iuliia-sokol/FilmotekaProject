@@ -4,11 +4,11 @@ dotenv.config();
 export const FIREBASE_CONFIG = process.env.FIREBASE_CONFIG;
 export const API_KEY = process.env.API_KEY;
 
-console.log(FIREBASE_CONFIG);
-console.log(API_KEY);
-console.log(process.env);
+// console.log(FIREBASE_CONFIG);
+// console.log(API_KEY);
+// console.log(process.env);
 
-console.log(JSON.parse(FIREBASE_CONFIG));
+// console.log(JSON.parse(FIREBASE_CONFIG));
 
 // const h = JSON.stringify({
 //   apiKey: 'AIzaSyDirVSk2C0xEc8PdJg7baqOMmHMSdYv4e8',
