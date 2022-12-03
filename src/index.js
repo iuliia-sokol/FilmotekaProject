@@ -11,6 +11,7 @@ import { callfooterModal } from './javascript/footerModal';
 import { scrollFunction } from './javascript/scroll';
 import { renderGenres } from './javascript/renderGenres';
 import { paginOptions, paginOptionsLess } from './javascript/paginOptions';
+import firebaseAPI from './javascript/firebase';
 
 const themoviedbAPI = new ThemoviedbAPI();
 export let allProducts = null;

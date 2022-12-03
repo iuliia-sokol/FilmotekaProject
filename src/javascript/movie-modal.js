@@ -5,6 +5,7 @@ import { ThemoviedbAPI } from './themoviedbAPI';
 import BigPicture from 'bigpicture';
 import { set, get, remove } from './localStorageUse';
 import { spinnerPlay, spinnerStop } from './spiner';
+import firebaseAPI from './firebase';
 
 const movieAPI = new ThemoviedbAPI();
 
@@ -141,15 +142,31 @@ function onAddToWatchedClick(event) {
   event.preventDefault();
   event.target.textContent = 'Added to watched';
   event.target.disabled = true;
-
+  // if (firebaseAPI.instance.userId) {
+  //   firebaseAPI.instance.addToFirebase(
+  //     +event.target.dataset.btn,
+  //     event.target.dataset.type,
+  //     event.target.dataset.id
+  //   );
+  // } else {
   set(movieAPI.WATCH_KEY, event.target.dataset.id);
+  // }
 }
 
 function onAddToQuequeClick(event) {
   event.preventDefault();
   event.target.textContent = 'Added to queque';
   event.target.disabled = true;
+  // if (firebaseAPI.instance.userId) {
+  //   firebaseAPI.instance.addToFirebase(
+  //     +event.target.dataset.btn,
+  //     event.target.dataset.type,
+  //     event.target.dataset.id
+  //   );
+  // } else {
   set(movieAPI.QUEUE_KEY, event.target.dataset.id);
+  //   console.log(event.target.dataset.id);
+  // }
 }
 
 function checkLocalStorage(key, filmData, btn, btnText) {
