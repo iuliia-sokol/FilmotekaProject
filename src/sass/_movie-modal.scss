@@ -29,7 +29,7 @@
   max-height: 85vh;
   // margin-top: 20px;
   // margin-bottom: 38px;
-  background-color: white;
+  background-color: $primary-bgc;
   position: relative;
   opacity: 0;
 
@@ -63,7 +63,7 @@
     z-index: 10;
     background-color: transparent;
     border: none;
-    color: #000000;
+    color: $secondary-text-color;
     @include transition(transform);
 
     &:hover,
@@ -100,13 +100,13 @@
     justify-content: center;
     column-gap: 6px;
     border: none;
-    background-color: #ff6b01;
+    background-color: $accent-color;
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: 500;
     font-size: 12px;
     line-height: 1;
-    color: #fff;
+    color: $primary-text-color;
     transform: scale(1);
     @include transition(transform);
 
@@ -131,7 +131,7 @@
   &__title {
     font-weight: 500;
     text-transform: uppercase;
-    color: #000000;
+    color: $secondary-text-color;
     font-size: 20px;
     line-height: 1.15;
     margin-bottom: 20px;
@@ -152,7 +152,7 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     row-gap: 8px;
-    color: #8c8c8c;
+    color: $elements-grey-color;
   }
 
   &__meta-value-list {
@@ -162,7 +162,7 @@
     flex-wrap: nowrap;
     justify-content: flex-start;
     row-gap: 8px;
-    color: #000000;
+    color: $secondary-text-color;
   }
 
   &__meta-value-vote {
@@ -171,15 +171,15 @@
     align-items: center;
     flex-wrap: nowrap;
     padding: 1px 9px;
-    background: #ff6b01;
+    background-color: $accent-color;
     border-radius: 5px;
-    color: #ffffff;
+    color: $primary-text-color;
     line-height: 1.17;
   }
 
   &__meta-value-votes-divider {
     margin-left: 3px;
-    color: #8c8c8c;
+    color: $elements-grey-color;
   }
 
   &__meta-value-votes {
@@ -188,7 +188,7 @@
     align-items: center;
     flex-wrap: nowrap;
     padding: 1px 4px;
-    background-color: #f7f7f7;
+    background-color: $secondary-bgc;
     border-radius: 5px;
     line-height: 1.17;
   }
@@ -201,7 +201,7 @@
     font-weight: 500;
     font-size: 12px;
     line-height: 1.67;
-    color: #000000;
+    color: $secondary-text-color;
   }
 
   &__description-title {
@@ -237,15 +237,15 @@
     &:hover,
     &:focus {
       border: none;
-      background-color: #ff6b01;
-      color: #fff;
+      background-color: $accent-color;
+      color: $primary-text-color;
       transform: scale(1.1);
     }
 
     &:disabled {
       border: none;
-      background-color: #ff6b01;
-      color: #fff;
+      background-color: $accent-color;
+      color: $primary-text-color;
       opacity: 0.6;
       transform: scale(1);
     }
