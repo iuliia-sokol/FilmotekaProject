@@ -38,6 +38,7 @@
   align-items: center;
   padding-top: 40px;
   padding-bottom: 54px;
+  position: relative;
 }
 
 .logo-site:hover > svg,
@@ -49,13 +50,8 @@
 }
 
 .logo {
-  stroke: #ffffff;
+  stroke: $primary-text-color;
 }
-
-// .logo:hover,
-// .logo:focus {
-//   stroke: $accent-color;
-// }
 
 .logo__name {
   display: none;
@@ -68,6 +64,54 @@
 
 .navigation-list {
   display: flex;
+  flex-wrap: wrap;
+  flex-grow: 0;
+}
+
+.navigation-buttons {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  transform: translateY(-100%);
+
+  @media screen and (min-width: $tablet) {
+    transform: translateY(0);
+  }
+}
+
+.navigation-btn {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1.67;
+  font-weight: 500;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  color: inherit;
+  fill: $primary-text-color;
+  // position: relative;
+
+  &:hover {
+    color: $accent-color;
+    fill: $accent-color;
+  }
+}
+
+.userStatus {
+  position: absolute;
+  transform: translateY(300%);
+  right: 0;
+  bottom: 0;
+  font-size: 14px;
+  line-height: 1.67;
+
+  @media screen and (min-width: $tablet) {
+    transform: translateY(200%);
+  }
 }
 
 .navigation-list__item {
@@ -132,13 +176,13 @@
 }
 
 .form-input::placeholder {
-  color: #ffffff;
+  color: $primary-text-color;
 }
 
 .search-btn {
-  stroke: #ffffff;
+  stroke: $primary-text-color;
 
-  fill: #ffffff;
+  fill: $primary-text-color;
   position: absolute;
   width: 22px;
   height: 22px;
@@ -198,11 +242,6 @@
     font-weight: 500;
     font-size: 30px;
     line-height: 1.17;
-
-    // &:focus,
-    // &:hover {
-    //   color: $accent-color;
-    // }
   }
 
   .logo-container {
