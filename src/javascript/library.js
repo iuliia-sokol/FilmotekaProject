@@ -8,6 +8,7 @@ import { createModalMarkUp } from './renderModalMarkUp';
 import { spinnerPlay, spinnerStop } from './spiner';
 import { get, removeLocal } from './localStorageUse';
 import { libraryFooterModalOpen } from './libraryFooterModalOpen';
+import { instance } from './firebase';
 
 const themoviedbAPI = new ThemoviedbAPI();
 
@@ -72,8 +73,7 @@ async function renderWatchedMovies() {
       );
       libRefs.library.lastElementChild.setAttribute('data-status', 'watched');
     });
-  }
-  catch (error) {
+  } catch (error) {
     Notify.failure('Ооps, something went wrong, please try again');
   }
 }
@@ -82,6 +82,7 @@ async function renderQueueMovies() {
   spinnerPlay();
   libRefs.library.innerHTML = '';
   const queueMovies = get(themoviedbAPI.QUEUE_KEY);
+  console.log(queueMovies);
   displayBg(queueMovies);
   const queueMoviesIDes = queueMovies.map(movie => movie.id);
   try {
@@ -100,11 +101,9 @@ async function renderQueueMovies() {
       );
       libRefs.library.lastElementChild.setAttribute('data-status', 'queue');
     });
-  }
-  catch (error) {
+  } catch (error) {
     Notify.failure('Ооps, something went wrong, please try again');
-  }
-  finally {
+  } finally {
     spinnerStop();
   }
 }
@@ -152,7 +151,6 @@ async function onMovieCardClick(event) {
       removeFromWatchedBtn.addEventListener('click', onRemoveFromWatchedClick);
       removeFromQuequeBtn.addEventListener('click', onRemoveFromQuequeClick);
 
-
       checkLocalStorageLibrary(
         themoviedbAPI.WATCH_KEY,
         filmData,
@@ -171,13 +169,20 @@ async function onMovieCardClick(event) {
 
       function onRemoveFromWatchedClick(e) {
         const movieId = e.target.dataset.btn;
+        if (instance.userId) {
+          removeFromFirebase(+movieId, e.target.dataset.type);
+        }
         removeLocal(themoviedbAPI.WATCH_KEY, movieId);
         e.target.textContent = 'Removed from Watched';
         e.target.disabled = true;
         if (e.target.dataset.list === movieStatus) {
           movieCard.remove();
         }
-        displayBg(get(themoviedbAPI.WATCH_KEY))
+        if (libRefs.watchBtn.classList.contains('is-active-library')) {
+          displayBg(get(themoviedbAPI.WATCH_KEY));
+        } else {
+          displayBg(get(themoviedbAPI.QUEUE_KEY));
+        }
       }
 
       function onRemoveFromQuequeClick(e) {
@@ -188,7 +193,11 @@ async function onMovieCardClick(event) {
         if (e.target.dataset.list === movieStatus) {
           movieCard.remove();
         }
-        displayBg(get(themoviedbAPI.QUEUE_KEY))
+        if (libRefs.watchBtn.classList.contains('is-active-library')) {
+          displayBg(get(themoviedbAPI.WATCH_KEY));
+        } else {
+          displayBg(get(themoviedbAPI.QUEUE_KEY));
+        }
       }
     });
   } catch (error) {

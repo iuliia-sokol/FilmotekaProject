@@ -1,11 +1,11 @@
-import { refs } from './refs';
+import { getOneMovieInfo } from './getMovieInfo';
 import { allProducts } from '/src/index';
 import { createModalMarkUp } from './renderModalMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
 import BigPicture from 'bigpicture';
-import { set, get, remove } from './localStorageUse';
+import { save, get, remove } from './localStorageUse';
 import { spinnerPlay, spinnerStop } from './spiner';
-import firebaseAPI from './firebase';
+import { instance } from './firebase';
 
 const movieAPI = new ThemoviedbAPI();
 
@@ -53,6 +53,7 @@ async function onFilmCardClick(event) {
         ? `https://image.tmdb.org/t/p/w300${data.poster_path}`
         : `https://astoriamuseums.org/wp-content/uploads/2020/10/OFM-poster-not-available.png`;
       const releaseYear = new Date(Date.parse(data.release_date)).getFullYear();
+
       const filmData = {
         id: data.id,
         poster: posterPath,
@@ -66,13 +67,16 @@ async function onFilmCardClick(event) {
         release_date: releaseYear,
       };
 
-      const stringifiedJSONFilmData = JSON.stringify(filmData);
       data.genres.forEach(genre => {
         filmData.genres.push(genre.name);
       });
       filmData.genres = filmData.genres.join(', ');
 
-      createModalMarkUp(filmData, stringifiedJSONFilmData);
+      const stringifiedJSONFilmData = JSON.stringify(filmData);
+      const filmDataObj = getOneMovieInfo(data);
+      save('modalInfo', filmDataObj);
+
+      createModalMarkUp(filmData, filmDataObj);
 
       getTrailer(filmId);
 
@@ -84,14 +88,14 @@ async function onFilmCardClick(event) {
         '.lightbox-modal__queque-button'
       );
       checkLocalStorage(
-        movieAPI.WATCH_KEY,
-        filmData,
+        'watched',
+        filmDataObj,
         addToWatchedBtn,
         'Added to watched'
       );
       checkLocalStorage(
-        movieAPI.QUEUE_KEY,
-        filmData,
+        'queue',
+        filmDataObj,
         addToQuequeBtn,
         'Added to queque'
       );
@@ -142,31 +146,38 @@ function onAddToWatchedClick(event) {
   event.preventDefault();
   event.target.textContent = 'Added to watched';
   event.target.disabled = true;
-  // if (firebaseAPI.instance.userId) {
-  //   firebaseAPI.instance.addToFirebase(
-  //     +event.target.dataset.btn,
-  //     event.target.dataset.type,
-  //     event.target.dataset.id
-  //   );
-  // } else {
-  set(movieAPI.WATCH_KEY, event.target.dataset.id);
-  // }
+  if (instance.userId) {
+    addToFirebase(
+      +event.target.dataset.btn,
+      event.target.dataset.type,
+      event.target.dataset.id
+    );
+  } else {
+    addToLocalStorage(
+      +event.target.dataset.btn,
+      event.target.dataset.type,
+      event.target.dataset.id
+    );
+  }
 }
 
 function onAddToQuequeClick(event) {
   event.preventDefault();
   event.target.textContent = 'Added to queque';
   event.target.disabled = true;
-  // if (firebaseAPI.instance.userId) {
-  //   firebaseAPI.instance.addToFirebase(
-  //     +event.target.dataset.btn,
-  //     event.target.dataset.type,
-  //     event.target.dataset.id
-  //   );
-  // } else {
-  set(movieAPI.QUEUE_KEY, event.target.dataset.id);
-  //   console.log(event.target.dataset.id);
-  // }
+  if (instance.userId) {
+    addToFirebase(
+      +event.target.dataset.btn,
+      event.target.dataset.type,
+      event.target.dataset.id
+    );
+  } else {
+    addToLocalStorage(
+      +event.target.dataset.btn,
+      event.target.dataset.type,
+      event.target.dataset.id
+    );
+  }
 }
 
 function checkLocalStorage(key, filmData, btn, btnText) {
@@ -178,4 +189,21 @@ function checkLocalStorage(key, filmData, btn, btnText) {
     btn.textContent = `${btnText}`;
     btn.disabled = true;
   }
+}
+
+function addToLocalStorage(id, type, data) {
+  const localStorageItem = get(type) || [];
+  if (localStorageItem.find(info => info?.id === id)) return;
+  const movieInfo = get('modalInfo');
+  localStorageItem.push(movieInfo);
+  save(type, localStorageItem);
+}
+
+async function addToFirebase(id, type) {
+  const isInLyb = await instance.isInLyb(id, type);
+  console.log(`Is movie in DB? `, isInLyb);
+  if (isInLyb) return;
+  const movieInfo = get('modalInfo');
+  instance.addToLyb(id, type, movieInfo);
+  console.log('added');
 }
