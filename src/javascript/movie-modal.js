@@ -2,8 +2,9 @@ import { getOneMovieInfo } from './getMovieInfo';
 import { allProducts } from '/src/index';
 import { createModalMarkUp } from './renderModalMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
-import BigPicture from 'bigpicture';
-import { save, load, remove } from './localStorageUse';
+import { getTrailer } from './getTrailer';
+
+import { save, load } from './localStorageUse';
 import { spinnerPlay, spinnerStop } from './spiner';
 import { instance } from './firebase';
 
@@ -78,7 +79,7 @@ async function onFilmCardClick(event) {
 
       createModalMarkUp(filmData, filmDataObj);
 
-      getTrailer(filmId);
+      getTrailer(filmId, movieAPI);
 
       const addToWatchedBtn = document.querySelector(
         '.lightbox-modal__watched-button'
@@ -100,8 +101,8 @@ async function onFilmCardClick(event) {
         'Added to queque'
       );
 
-      addToWatchedBtn.addEventListener('click', onAddToWatchedClick);
-      addToQuequeBtn.addEventListener('click', onAddToQuequeClick);
+      addToWatchedBtn.addEventListener('click', onModalBtnClick);
+      addToQuequeBtn.addEventListener('click', onModalBtnClick);
     });
   } catch (error) {
     Notify.failure('Ооps, something went wrong, please try again');
@@ -110,42 +111,7 @@ async function onFilmCardClick(event) {
   }
 }
 
-function getTrailer(filmId) {
-  try {
-    movieAPI.fetchTrailerById(filmId).then(result => {
-      const trailers = result.results;
-      if (trailers.length > 0) {
-        const trailerBtn = document.querySelector('.lightbox-modal__trailer');
-        trailerBtn.classList.remove('is-hidden');
-        const officialTrailer = trailers.find(
-          el =>
-            el.name === 'Official Trailer' ||
-            el.name.includes('Official') ||
-            el.name[0]
-        );
-        const trailerKey = officialTrailer.key;
-
-        trailerBtn.addEventListener('click', ontrailerBtnClick);
-
-        function ontrailerBtnClick(e) {
-          BigPicture({
-            el: e.target,
-            ytSrc: `${trailerKey}`,
-          });
-        }
-      }
-    });
-  } catch {
-    er => {
-      console.log(er);
-    };
-  }
-}
-
-function onAddToWatchedClick(event) {
-  event.preventDefault();
-  event.target.textContent = 'Added to watched';
-  event.target.disabled = true;
+function onModalBtnClick(event) {
   if (instance.userId) {
     addToFirebase(
       +event.target.dataset.btn,
@@ -159,25 +125,13 @@ function onAddToWatchedClick(event) {
       event.target.dataset.id
     );
   }
-}
-
-function onAddToQuequeClick(event) {
-  event.preventDefault();
-  event.target.textContent = 'Added to queque';
-  event.target.disabled = true;
-  if (instance.userId) {
-    addToFirebase(
-      +event.target.dataset.btn,
-      event.target.dataset.type,
-      event.target.dataset.id
-    );
-  } else {
-    addToLocalStorage(
-      +event.target.dataset.btn,
-      event.target.dataset.type,
-      event.target.dataset.id
-    );
+  if ((event.target.dataset.type = 'watched')) {
+    event.target.textContent = 'Added to watched';
   }
+  if ((event.target.dataset.type = 'queue')) {
+    event.target.textContent = 'Added to queque';
+  }
+  event.target.disabled = true;
 }
 
 function checkLocalStorage(key, filmData, btn, btnText) {

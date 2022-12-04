@@ -4,9 +4,11 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { libRefs } from './libRefs';
 import { renderLibraryMarkup } from './renderLibraryMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
+import { scrollFunction } from './scroll';
 import { createModalMarkUp } from './renderModalMarkUp';
 import { spinnerPlay, spinnerStop } from './spiner';
 import { load, removeLocal } from './localStorageUse';
+import { getTrailer } from './getTrailer';
 import { libraryFooterModalOpen } from './libraryFooterModalOpen';
 import { instance } from './firebase';
 
@@ -17,6 +19,7 @@ libRefs.watchBtn.classList.add('is-active-library');
 try {
   spinnerPlay();
   renderWatchedMovies();
+  window.addEventListener('scroll', scrollFunction);
   libRefs.footerLink.addEventListener('click', libraryFooterModalOpen);
 } catch (error) {
   Notify.failure('Ооps, something went wrong, please try again');
@@ -139,6 +142,7 @@ async function onMovieCardClick(event) {
       });
       filmData.genres = filmData.genres.join(', ');
 
+      getTrailer(movieId, themoviedbAPI);
       createModalMarkUp(filmData);
 
       const removeFromWatchedBtn = document.querySelector(
