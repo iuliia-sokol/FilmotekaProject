@@ -3,7 +3,7 @@ import { allProducts } from '/src/index';
 import { createModalMarkUp } from './renderModalMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
 import BigPicture from 'bigpicture';
-import { save, get, remove } from './localStorageUse';
+import { save, load, remove } from './localStorageUse';
 import { spinnerPlay, spinnerStop } from './spiner';
 import { instance } from './firebase';
 
@@ -181,7 +181,7 @@ function onAddToQuequeClick(event) {
 }
 
 function checkLocalStorage(key, filmData, btn, btnText) {
-  const locStorage = get(key);
+  const locStorage = load(key);
   const currentFilm = filmData;
   const includesFilm = locStorage.find(film => film.id === currentFilm.id);
 
@@ -192,18 +192,17 @@ function checkLocalStorage(key, filmData, btn, btnText) {
 }
 
 function addToLocalStorage(id, type, data) {
-  const localStorageItem = get(type) || [];
+  const localStorageItem = load(type) || [];
   if (localStorageItem.find(info => info?.id === id)) return;
-  const movieInfo = get('modalInfo');
+  const movieInfo = load('modalInfo');
   localStorageItem.push(movieInfo);
   save(type, localStorageItem);
 }
 
 async function addToFirebase(id, type) {
   const isInLyb = await instance.isInLyb(id, type);
-  console.log(`Is movie in DB? `, isInLyb);
   if (isInLyb) return;
-  const movieInfo = get('modalInfo');
+  const movieInfo = load('modalInfo');
   instance.addToLyb(id, type, movieInfo);
   console.log('added');
 }

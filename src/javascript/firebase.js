@@ -5,7 +5,6 @@ import {
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
-  sendSignInLinkToEmail,
   isSignInWithEmailLink,
   signInWithEmailLink,
   signInWithRedirect,
@@ -20,9 +19,9 @@ import {
   onValue,
 } from 'firebase/database';
 import { refs } from './refs';
-import { save, get, removeLocal, clearLocal } from './localStorageUse';
+import { save, load, removeLocal, clearLocal } from './localStorageUse';
 import { ThemoviedbAPI } from './themoviedbAPI';
-import storageAPI from './storageAPI';
+// import { renderWatchedMovies, renderQueueMovies } from './library';
 
 const themoviedbAPI = new ThemoviedbAPI();
 
@@ -91,6 +90,7 @@ class firebaseAPI {
       const user = signInResult.user;
       this.userId = user.uid;
       this.userStatus.textContent = `Hello, ${user.displayName}`;
+
       //   console.log(user);
     } catch (error) {
       const credential = GoogleAuthProvider.credentialFromError(error);
@@ -105,7 +105,7 @@ class firebaseAPI {
   }
 
   async writeDataToStorage(key, data) {
-    storageAPI.save(key, data);
+    save(key, data);
   }
 
   // Monitor auth state
@@ -132,21 +132,24 @@ class firebaseAPI {
         this.userId = user.uid;
         refs.signOutBtnEl.classList.remove('visually-hidden');
         refs.signInBtnEl.classList.add('visually-hidden');
-        refs.userStatusEl.textContent = `Hello, ${user.displayName}`;
-        console.log('User info from monitor', user);
+        user.displayName
+          ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
+          : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
         this.accessToken = user.accessToken;
-        const watched = storageAPI.load('watched');
+        const watched = load('watched');
 
         if (watched) {
           watched.forEach(movie => {
             this.addToLyb(movie.id, 'watched', movie);
+            //    renderWatchedMovies();
           });
         }
 
-        const queue = storageAPI.load('queue');
+        const queue = load('queue');
         if (queue) {
           queue.forEach(movie => {
             this.addToLyb(movie.id, 'queue', movie);
+            //   renderQueueMovies();
           });
         }
 
@@ -164,7 +167,6 @@ class firebaseAPI {
           } else {
             this.writeDataToStorage('watched', []);
           }
-          //   modalMovieCardAPI.showLybrary('watched');
         });
         const userLybraryQueue = ref(
           this.database,
@@ -180,8 +182,6 @@ class firebaseAPI {
           } else {
             this.writeDataToStorage('queue', []);
           }
-
-          //   modalMovieCardAPI.showLybrary('queue');
         });
       } else {
         refs.signOutBtnEl.classList.add('visually-hidden');
@@ -239,16 +239,6 @@ class firebaseAPI {
     } catch (error) {
       console.log(`Fail to remove from DB ---> ${error}`);
     }
-  }
-  async setYouTubeStatus(timeStamp, status) {
-    set(ref(this.database, 'appSettings/status'), {
-      status,
-      timeStamp,
-    });
-  }
-  async getYouTubeStatus() {
-    const snapshot = await get(child(this.dbRef, `appSettings/status`));
-    return snapshot.val();
   }
 }
 

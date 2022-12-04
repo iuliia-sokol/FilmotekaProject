@@ -6,7 +6,7 @@ import { renderLibraryMarkup } from './renderLibraryMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
 import { createModalMarkUp } from './renderModalMarkUp';
 import { spinnerPlay, spinnerStop } from './spiner';
-import { get, removeLocal } from './localStorageUse';
+import { load, removeLocal } from './localStorageUse';
 import { libraryFooterModalOpen } from './libraryFooterModalOpen';
 import { instance } from './firebase';
 
@@ -36,7 +36,7 @@ libRefs.queueBtn.addEventListener('click', () => {
 });
 libRefs.library.addEventListener('click', onMovieCardClick);
 
-function displayBg(array) {
+export function displayBg(array) {
   const emptyTitle = document.querySelector('.js-title-queue');
   const emptyImg = document.querySelector('.js-library-bg-image');
   const mainEl = document.querySelector('main');
@@ -52,9 +52,9 @@ function displayBg(array) {
   }
 }
 
-async function renderWatchedMovies() {
+export async function renderWatchedMovies() {
   libRefs.library.innerHTML = '';
-  const watchedMovies = get(themoviedbAPI.WATCH_KEY);
+  const watchedMovies = load(themoviedbAPI.WATCH_KEY);
   displayBg(watchedMovies);
   try {
     const watchedMoviesIds = watchedMovies.map(movie => movie.id);
@@ -78,10 +78,10 @@ async function renderWatchedMovies() {
   }
 }
 
-async function renderQueueMovies() {
+export async function renderQueueMovies() {
   spinnerPlay();
   libRefs.library.innerHTML = '';
-  const queueMovies = get(themoviedbAPI.QUEUE_KEY);
+  const queueMovies = load(themoviedbAPI.QUEUE_KEY);
   displayBg(queueMovies);
   const queueMoviesIDes = queueMovies.map(movie => movie.id);
   try {
@@ -101,6 +101,7 @@ async function renderQueueMovies() {
       libRefs.library.lastElementChild.setAttribute('data-status', 'queue');
     });
   } catch (error) {
+    console.log(error);
     Notify.failure('Ооps, something went wrong, please try again');
   } finally {
     spinnerStop();
@@ -168,8 +169,7 @@ async function onMovieCardClick(event) {
 
       function onRemoveFromWatchedClick(e) {
         const movieId = e.target.dataset.btn;
-        console.log(movieId);
-        console.log(e.target.dataset.type);
+
         removeLocal(themoviedbAPI.WATCH_KEY, movieId);
         e.target.textContent = 'Removed from Watched';
         e.target.disabled = true;
@@ -177,9 +177,9 @@ async function onMovieCardClick(event) {
           movieCard.remove();
         }
         if (libRefs.watchBtn.classList.contains('is-active-library')) {
-          displayBg(get(themoviedbAPI.WATCH_KEY));
+          displayBg(load(themoviedbAPI.WATCH_KEY));
         } else {
-          displayBg(get(themoviedbAPI.QUEUE_KEY));
+          displayBg(load(themoviedbAPI.QUEUE_KEY));
         }
 
         if (instance.userId) {
@@ -196,9 +196,9 @@ async function onMovieCardClick(event) {
           movieCard.remove();
         }
         if (libRefs.watchBtn.classList.contains('is-active-library')) {
-          displayBg(get(themoviedbAPI.WATCH_KEY));
+          displayBg(load(themoviedbAPI.WATCH_KEY));
         } else {
-          displayBg(get(themoviedbAPI.QUEUE_KEY));
+          displayBg(load(themoviedbAPI.QUEUE_KEY));
         }
         if (instance.userId) {
           instance.removeFromLyb(+movieId, e.target.dataset.type);
@@ -206,6 +206,7 @@ async function onMovieCardClick(event) {
       }
     });
   } catch (error) {
+    console.log(error);
     Notify.failure('Ооps, something went wrong, please try again');
   } finally {
     spinnerStop();
@@ -213,7 +214,7 @@ async function onMovieCardClick(event) {
 }
 
 function checkLocalStorageLibrary(key, filmData, btn, btnText, status) {
-  const locStorage = get(key);
+  const locStorage = load(key);
   const currentFilm = filmData;
   const includesFilm = locStorage.find(film => film.id === currentFilm.id);
 
