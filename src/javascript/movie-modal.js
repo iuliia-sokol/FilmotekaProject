@@ -3,7 +3,7 @@ import { allProducts } from '/src/index';
 import { createModalMarkUp } from './renderModalMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
 import { getTrailer } from './getTrailer';
-
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { save, load } from './localStorageUse';
 import { spinnerPlay, spinnerStop } from './spiner';
 import { instance } from './firebase';
@@ -158,5 +158,5 @@ async function addToFirebase(id, type) {
   if (isInLyb) return;
   const movieInfo = load('modalInfo');
   instance.addToLyb(id, type, movieInfo);
-  console.log('added');
+  Notify.success('The movie added to your library');
 }

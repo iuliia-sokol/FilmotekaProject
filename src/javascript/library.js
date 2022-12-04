@@ -1,4 +1,3 @@
-import BigPicture from 'bigpicture';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { libRefs } from './libRefs';
@@ -188,6 +187,7 @@ async function onMovieCardClick(event) {
 
         if (instance.userId) {
           instance.removeFromLyb(+movieId, e.target.dataset.type);
+          Notify.info('The movie removed from Watched');
         }
       }
 
@@ -206,6 +206,7 @@ async function onMovieCardClick(event) {
         }
         if (instance.userId) {
           instance.removeFromLyb(+movieId, e.target.dataset.type);
+          Notify.info('The movie removed from Queue');
         }
       }
     });

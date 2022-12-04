@@ -18,6 +18,7 @@ import {
   remove,
   onValue,
 } from 'firebase/database';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { refs } from './refs';
 import { save, load, removeLocal, clearLocal } from './localStorageUse';
 import { ThemoviedbAPI } from './themoviedbAPI';
