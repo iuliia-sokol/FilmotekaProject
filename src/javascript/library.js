@@ -82,7 +82,6 @@ async function renderQueueMovies() {
   spinnerPlay();
   libRefs.library.innerHTML = '';
   const queueMovies = get(themoviedbAPI.QUEUE_KEY);
-  console.log(queueMovies);
   displayBg(queueMovies);
   const queueMoviesIDes = queueMovies.map(movie => movie.id);
   try {
@@ -169,9 +168,8 @@ async function onMovieCardClick(event) {
 
       function onRemoveFromWatchedClick(e) {
         const movieId = e.target.dataset.btn;
-        if (instance.userId) {
-          removeFromFirebase(+movieId, e.target.dataset.type);
-        }
+        console.log(movieId);
+        console.log(e.target.dataset.type);
         removeLocal(themoviedbAPI.WATCH_KEY, movieId);
         e.target.textContent = 'Removed from Watched';
         e.target.disabled = true;
@@ -182,6 +180,10 @@ async function onMovieCardClick(event) {
           displayBg(get(themoviedbAPI.WATCH_KEY));
         } else {
           displayBg(get(themoviedbAPI.QUEUE_KEY));
+        }
+
+        if (instance.userId) {
+          instance.removeFromLyb(+movieId, e.target.dataset.type);
         }
       }
 
@@ -197,6 +199,9 @@ async function onMovieCardClick(event) {
           displayBg(get(themoviedbAPI.WATCH_KEY));
         } else {
           displayBg(get(themoviedbAPI.QUEUE_KEY));
+        }
+        if (instance.userId) {
+          instance.removeFromLyb(+movieId, e.target.dataset.type);
         }
       }
     });
