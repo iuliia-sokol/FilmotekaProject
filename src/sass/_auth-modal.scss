@@ -44,12 +44,37 @@
   justify-content: center;
   align-items: flex-end;
   flex-direction: column;
-  //   gap: 16px;
   margin: 0 auto;
 }
 
 .lightbox-modal__auth-buttons {
   justify-content: center;
+}
+
+.auth-create-notify {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  transform: translateY(-100%);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px;
+  min-width: 110px;
+  min-height: 44px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.33;
+  color: $secondary-text-color;
+  //   background-color: rgba(203, 201, 98, 0.2);
+  border: 1px solid $accent-color;
+  border-radius: 10px;
+  box-shadow: 0 0 10em 1em rgba(255, 139, 72, 0.6);
+  @include transition(opacity);
+}
+
+.auth-create-btn-wrapper {
+  position: relative;
 }
 
 .lightbox-modal__auth-label {
@@ -78,6 +103,17 @@
 
   &:focus + .lightbox-modal__auth-label {
     color: $accent-color;
+  }
+}
+
+@media screen and (min-width: $tablet) {
+  .auth-create-btn-wrapper {
+    position: relative;
+
+    &:hover > .auth-create-notify,
+    &:focus > .auth-create-notify {
+      opacity: 1;
+    }
   }
 }
 

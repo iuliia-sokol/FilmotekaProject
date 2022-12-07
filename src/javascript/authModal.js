@@ -35,7 +35,12 @@ export function onSignInBtnClick(event) {
 
 <div class="lightbox-modal__buttons lightbox-modal__auth-buttons">
 <button type="button" id="js-signInWithEmailBtn" class="lightbox-modal__button js-signInWithEmailBtn">Log in</button>
-<button type="button" id="js-createUserBtn" class="lightbox-modal__button">Register</button>
+<div class="auth-create-btn-wrapper">
+<button type="button" id="js-createUserBtn" class="lightbox-modal__button">Create account</button>
+<div class="auth-create-notify">
+<p class="auth-notify">Newcomer? Create an account!</p>
+</div>
+</div>
 </div>
 
 </form>
