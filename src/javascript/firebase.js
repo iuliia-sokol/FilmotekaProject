@@ -8,6 +8,8 @@ import {
   isSignInWithEmailLink,
   signInWithEmailLink,
   signInWithRedirect,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth';
 import {
   getDatabase,
@@ -20,8 +22,10 @@ import {
 } from 'firebase/database';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { refs } from './refs';
-import { save, load, removeLocal, clearLocal } from './localStorageUse';
+import { save, load } from './localStorageUse';
+import { spinnerPlay, spinnerStop } from './spiner';
 import { ThemoviedbAPI } from './themoviedbAPI';
+import { onSignInBtnClick } from './authModal';
 // import { renderWatchedMovies, renderQueueMovies } from './library';
 
 const themoviedbAPI = new ThemoviedbAPI();
@@ -49,55 +53,120 @@ class firebaseAPI {
     this.apiKey = this.firebaseConfig.apiKey;
     this.dbRef = ref(this.database);
     this.monitorAuthState();
-    signInBtnEl.addEventListener(
-      'click',
-      this.signInWithRedirectFirebase.bind(this)
-    );
+    // signInBtnEl.addEventListener(
+    //   'click',
+    //   this.signInWithRedirectFirebase.bind(this)
+    // );
+    signInBtnEl.addEventListener('click', onSignInBtnClick);
     logOutBtnEl.addEventListener('click', this.logout.bind(this));
   }
 
-  //   async signInWithEmailLink() {
-  //     const actionCodeSettings = {
-  //       // URL you want to redirect back to. The domain (www.example.com) for this
-  //       // URL must be in the authorized domains list in the Firebase Console.
-  //       url: 'http://localhost:1234',
-  //       // This must be true.
-  //       handleCodeInApp: true,
-  //     };
-  //     const userEmail = refs.emailInputEl.value.trim();
-  //     console.log(userEmail);
-  //     sendSignInLinkToEmail(this.firebaseAuth, userEmail, actionCodeSettings)
-  //       .then(() => {
-  //         // The link was successfully sent. Inform the user.
-  //         // Save the email locally so you don't need to ask the user for it again
-  //         // if they open the link on the same device.
-  //         window.localStorage.setItem('emailForSignIn', userEmail);
-  //         // ...
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //         const errorCode = error.code;
-  //         const errorMessage = error.message;
-  //         // ...
-  //       });
-  //   }
+  // async signInWithEmailLink() {
+  //   const actionCodeSettings = {
+  //     // URL you want to redirect back to. The domain (www.example.com) for this
+  //     // URL must be in the authorized domains list in the Firebase Console.
+  //     url: 'http://localhost:1234',
+  //     // This must be true.
+  //     handleCodeInApp: true,
+  //   };
+  //   const userEmail = refs.emailInputEl.value.trim();
+  //   console.log(userEmail);
+  //   sendSignInLinkToEmail(this.firebaseAuth, userEmail, actionCodeSettings)
+  //     .then(() => {
+  //       // The link was successfully sent. Inform the user.
+  //       // Save the email locally so you don't need to ask the user for it again
+  //       // if they open the link on the same device.
+  //       window.localStorage.setItem('emailForSignIn', userEmail);
+  //       // ...
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       // ...
+  //     });
+  // }
+
+  async createUserWithEmailAndPassword(email, password) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        this.firebaseAuth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      Notify.success('New user created');
+      user.displayName
+        ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
+        : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
+      // ...
+    } catch (error) {
+      const errorCode = error.code;
+      if (errorCode === 'auth/weak-password') {
+        Notify.warning(`Password should contain at least 6 characters`);
+      }
+      if (errorCode === 'auth/email-already-in-use') {
+        Notify.warning(
+          `This email is already registered. Please log in or select another email`
+        );
+      }
+      if (errorCode === 'auth/invalid-email') {
+        Notify.warning(`Please enter valid email`);
+      }
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      // ..
+    }
+  }
+
+  async signInWithEmailAndPassword(email, password) {
+    signInWithEmailAndPassword(this.firebaseAuth, email, password)
+      .then(userCredential => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        user.displayName
+          ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
+          : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
+        // ...
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        if (errorCode === 'auth/wrong-password') {
+          Notify.failure(`Oops, wrong password!`);
+        }
+        if (errorCode === 'auth/user-not-found') {
+          Notify.failure(`Hmm.. This user does not exist`);
+        }
+        if (errorCode === 'auth/invalid-email') {
+          Notify.failure(`Please enter valid email`);
+        }
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+  }
 
   async signInWithPopupGoogle() {
     try {
+      spinnerPlay();
       const signInResult = await signInWithPopup(
         this.firebaseAuth,
         this.providerGoogle
       );
       const user = signInResult.user;
       this.userId = user.uid;
-      this.userStatus.textContent = `Hello, ${user.displayName}`;
+      user.displayName
+        ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
+        : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
 
       //   console.log(user);
     } catch (error) {
       const credential = GoogleAuthProvider.credentialFromError(error);
       console.log(error);
       console.log(credential);
-      console.log('error');
+    } finally {
+      spinnerStop();
     }
   }
 
@@ -130,6 +199,12 @@ class firebaseAPI {
     onAuthStateChanged(this.firebaseAuth, user => {
       if (user) {
         // uiAPI.hideRegistrationInfo();
+        const myTimeout = setTimeout(
+          user.displayName
+            ? Notify.info(`Welcome back, ${user.displayName}`)
+            : Notify.info(`Welcome back, ${user.email}`),
+          5000
+        );
         this.userId = user.uid;
         refs.signOutBtnEl.classList.remove('visually-hidden');
         refs.signInBtnEl.classList.add('visually-hidden');
@@ -169,6 +244,7 @@ class firebaseAPI {
             this.writeDataToStorage('watched', []);
           }
         });
+
         const userLybraryQueue = ref(
           this.database,
           `users/${this.userId}/lybrary/queue/`
@@ -196,6 +272,7 @@ class firebaseAPI {
   // Log out
   async logout() {
     try {
+      spinnerPlay();
       await signOut(this.firebaseAuth);
       sessionStorage.clear();
       window.location.reload();
@@ -206,11 +283,14 @@ class firebaseAPI {
       window.localStorage.removeItem('modalInfo');
     } catch (error) {
       console.log(error);
+    } finally {
+      spinnerStop();
     }
   }
 
   async isInLyb(id, type) {
     try {
+      spinnerPlay();
       const snapshot = await get(
         child(this.dbRef, `users/${this.userId}/lybrary/${type}/${id}`)
       );
@@ -222,8 +302,11 @@ class firebaseAPI {
     } catch (error) {
       console.log(error);
       return false;
+    } finally {
+      spinnerStop();
     }
   }
+
   async addToLyb(id, type, movieInfo) {
     set(ref(this.database, `users/${this.userId}/lybrary/${type}/${id}`), {
       id: movieInfo.id || null,
@@ -236,9 +319,12 @@ class firebaseAPI {
 
   async removeFromLyb(id, type) {
     try {
+      spinnerPlay();
       remove(ref(this.database, `users/${this.userId}/lybrary/${type}/${id}`));
     } catch (error) {
       console.log(`Fail to remove from DB ---> ${error}`);
+    } finally {
+      spinnerStop();
     }
   }
 }

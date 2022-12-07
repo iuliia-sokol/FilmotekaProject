@@ -1,7 +1,9 @@
 import BigPicture from 'bigpicture';
+import { spinnerPlay, spinnerStop } from './spiner';
 
 export function getTrailer(filmId, movieAPI) {
   try {
+    spinnerPlay();
     movieAPI.fetchTrailerById(filmId).then(result => {
       const trailers = result.results;
       if (trailers.length > 0) {
@@ -29,5 +31,7 @@ export function getTrailer(filmId, movieAPI) {
     er => {
       console.log(er);
     };
+  } finally {
+    spinnerStop();
   }
 }

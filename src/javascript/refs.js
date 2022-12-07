@@ -14,9 +14,24 @@ export const refs = {
   signInBtnEl: document.querySelector('.js-signIn-btn'),
   signOutBtnEl: document.querySelector('.js-signOut-btn'),
   userStatusEl: document.querySelector('.js-userStatus'),
-
-  // emailLinkBtnEl: document.querySelector('.js-email-link'),
-  // emailInputEl: document.querySelector('.js-email-input'),
-
-  // signInWindowEl: document.querySelector('.js-signIn-window'),
 };
+
+// emailInputEl.addEventListener('input', () => {
+//   const userEmail = emailInputEl.value.trim();
+//   const userPassword = passwordInputEl.value.trim();
+//   // console.log(userEmail);
+//   // console.log(userPassword);
+//   if (userEmail !== '' && userPassword !== '') {
+//     signInWithEmailBtnEl.classList.remove('lightbox-modal__button--disabled');
+//   }
+// });
+
+// passwordInputEl.addEventListener('input', () => {
+//   const userEmail = emailInputEl.value.trim();
+//   const userPassword = passwordInputEl.value.trim();
+//   // console.log(userEmail);
+//   // console.log(userPassword);
+//   if (userEmail !== '' && userPassword !== '') {
+//     signInWithEmailBtnEl.classList.remove('lightbox-modal__button--disabled');
+//   }
+// });

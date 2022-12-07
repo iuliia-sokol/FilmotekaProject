@@ -1,0 +1,50 @@
+.lightbox-modal__auth-data {
+  display: flex;
+  justify-content: center;
+}
+
+.lightbox-modal__form-wrapper {
+  padding: 0 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.lightbox-modal__auth-form {
+  display: flex;
+  flex-basis: 40%;
+  justify-content: center;
+  align-items: flex-end;
+  flex-direction: column;
+  //   gap: 16px;
+  margin: 0 auto;
+}
+
+.lightbox-modal__auth-label {
+  text-transform: uppercase;
+  font-size: 14px;
+  color: black;
+
+  &:hover,
+  &:focus {
+    color: $accent-color;
+  }
+}
+
+.lightbox-modal__auth-input {
+  padding: 6px 12px;
+  margin-left: 20px;
+  font-size: 14px;
+  border: none;
+  border-bottom: 1px solid black;
+  color: black;
+  outline-color: $accent-color;
+
+  &:hover {
+    border-bottom: 1px solid $accent-color;
+  }
+
+  &:focus + .lightbox-modal__auth-label {
+    color: $accent-color;
+  }
+}
