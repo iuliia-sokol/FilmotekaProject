@@ -1,10 +1,37 @@
 .lightbox-modal__auth-data {
   display: flex;
+  flex-wrap: wrap;
+  max-width: 100%;
   justify-content: center;
 }
 
+.auth-logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.auth-logo {
+  margin-right: 10px;
+  stroke: black;
+  fill: none;
+}
+
+// .auth-logo-icon {
+//   fill: black;
+//   stroke: black;
+// }
+
+.auth-logo-text {
+  display: block;
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 1.17;
+  color: black;
+}
+
 .lightbox-modal__form-wrapper {
-  padding: 0 40px;
+  max-width: 100%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;
@@ -12,12 +39,17 @@
 
 .lightbox-modal__auth-form {
   display: flex;
+  flex-wrap: wrap;
   flex-basis: 40%;
   justify-content: center;
   align-items: flex-end;
   flex-direction: column;
   //   gap: 16px;
   margin: 0 auto;
+}
+
+.lightbox-modal__auth-buttons {
+  justify-content: center;
 }
 
 .lightbox-modal__auth-label {
@@ -46,5 +78,15 @@
 
   &:focus + .lightbox-modal__auth-label {
     color: $accent-color;
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .lightbox-auth-modal {
+    padding: 0 40px;
+  }
+
+  .lightbox-modal__form-wrapper {
+    padding: 0 40px;
   }
 }

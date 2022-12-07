@@ -114,6 +114,7 @@ class firebaseAPI {
       if (errorCode === 'auth/invalid-email') {
         Notify.warning(`Please enter valid email`);
       }
+
       const errorMessage = error.message;
       console.log(errorMessage);
       // ..
@@ -141,6 +142,11 @@ class firebaseAPI {
         }
         if (errorCode === 'auth/invalid-email') {
           Notify.failure(`Please enter valid email`);
+        }
+        if (errorCode === 'auth/too-many-requests') {
+          Notify.failure(
+            'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.'
+          );
         }
         const errorMessage = error.message;
         console.log(errorMessage);
