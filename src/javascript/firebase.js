@@ -53,10 +53,6 @@ class firebaseAPI {
     this.apiKey = this.firebaseConfig.apiKey;
     this.dbRef = ref(this.database);
     this.monitorAuthState();
-    // signInBtnEl.addEventListener(
-    //   'click',
-    //   this.signInWithRedirectFirebase.bind(this)
-    // );
     signInBtnEl.addEventListener('click', onSignInBtnClick);
     logOutBtnEl.addEventListener('click', this.logout.bind(this));
   }
@@ -209,7 +205,6 @@ class firebaseAPI {
     }
     onAuthStateChanged(this.firebaseAuth, user => {
       if (user) {
-        // uiAPI.hideRegistrationInfo();
         const myTimeout = setTimeout(
           user.displayName
             ? Notify.info(`Welcome back, ${user.displayName}`)
@@ -245,7 +240,6 @@ class firebaseAPI {
           `users/${this.userId}/lybrary/watched/`
         );
         onValue(userLybraryWatched, watched => {
-          //   uiAPI.hideLoadingInfo();
           const data = watched.val();
           if (data) {
             const keys = Object.keys(data);
@@ -261,7 +255,6 @@ class firebaseAPI {
           `users/${this.userId}/lybrary/queue/`
         );
         onValue(userLybraryQueue, queue => {
-          //   uiAPI.hideLoadingInfo();
           const data = queue.val();
           if (data) {
             const keys = Object.keys(data);

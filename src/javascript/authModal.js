@@ -78,10 +78,7 @@ export function onSignInBtnClick(event) {
             modal.close();
           }
         }
-
         window.addEventListener('keydown', onEscClick);
-
-        // onLogInBtnClick();
       },
       onClose: modal => {
         document.querySelector('.btn-up').classList.remove('visually-hidden');

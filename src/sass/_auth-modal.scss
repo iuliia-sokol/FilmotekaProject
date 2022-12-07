@@ -1,3 +1,8 @@
+.lightbox-auth-modal {
+  align-items: center;
+  //   gap: 60px;
+}
+
 .lightbox-modal__auth-data {
   display: flex;
   flex-wrap: wrap;
@@ -172,6 +177,6 @@
 
 @media screen and (min-width: $desktop) {
   .lightbox-auth-modal {
-    padding: 0 40px;
+    padding: 0 60px;
   }
 }
