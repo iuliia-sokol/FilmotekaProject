@@ -202,7 +202,6 @@ class firebaseAPI {
     save(key, data);
   }
 
-  // Monitor auth state
   async monitorAuthState() {
     if (isSignInWithEmailLink(this.firebaseAuth, window.location.href)) {
       let email = window.localStorage.getItem('emailForSignIn');
@@ -212,7 +211,6 @@ class firebaseAPI {
 
       await signInWithEmailLink(this.firebaseAuth, email, window.location.href)
         .then(result => {
-          // Clear email from storage.
           window.localStorage.removeItem('emailForSignIn');
           window.location.replace(window.location.origin);
         })
@@ -290,7 +288,6 @@ class firebaseAPI {
     });
   }
 
-  // Log out
   async logout() {
     try {
       spinnerPlay();

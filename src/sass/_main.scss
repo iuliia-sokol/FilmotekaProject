@@ -378,7 +378,7 @@ main {
 }
 
 // THEME
-body.light-theme {
+body.main-bg.light-theme {
   // background-color: $primary-text-color;
   background: linear-gradient(
     to right,
@@ -413,7 +413,7 @@ body.light-theme {
   }
 }
 
-body.dark-theme {
+body.main-bg.dark-theme {
   background: linear-gradient(to right, #6f0000, #050424, rgb(19, 3, 3));
 
   .movie-info-title {
@@ -560,7 +560,7 @@ body.dark-theme {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to right, #6f0000, #200122);
+  background: linear-gradient(to right, #c4a7a7, #2f0432, #e7d4d4);
   color: #fafafa;
   // perspective: 1200px;
 }
@@ -623,15 +623,23 @@ body.dark-theme {
 }
 
 .cloak {
-  animation: swing 2s infinite alternate-reverse ease-in-out;
+  animation: swing 3s infinite alternate-reverse ease-in-out;
   height: 100%;
   width: 100%;
   transform-origin: 50% 30%;
   transform: rotate(calc(var(--swing-x) * -0.25deg));
-  background: radial-gradient(50% 40% at 50% 42%, white, rgb(101, 0, 0) 35%);
+  background: radial-gradient(
+    50% 40% at 50% 50%,
+    transparent,
+    rgba(99, 0, 4, 1) 30%
+  );
 
   &--dark {
-    background: radial-gradient(50% 40% at 50% 42%, white, rgb(19, 3, 3) 35%);
+    background: radial-gradient(
+      50% 40% at 50% 50%,
+      transparent,
+      rgb(19, 3, 3) 30%
+    );
   }
 }
 
