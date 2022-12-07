@@ -48,6 +48,16 @@
   margin: 0 auto;
 }
 
+.lightbox-modal__auth-reset-btn {
+  background-color: transparent;
+  border: none;
+
+  &:hover,
+  &:focus {
+    color: $accent-color;
+  }
+}
+
 .lightbox-modal__auth-buttons {
   justify-content: center;
 }

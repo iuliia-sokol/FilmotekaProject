@@ -26,13 +26,16 @@ export function onSignInBtnClick(event) {
 
 <div class="lightbox-modal__form-wrapper">
 <form class="lightbox-modal__auth-form">
+
 <div class="auth-inputs-wrapper">
 <input type="email" id="auth-email" class="lightbox-modal__auth-input js-email-input">
 <label class="lightbox-modal__auth-label" for="auth-email">Email</label>
 
 <input type="password" id="auth-password" class="lightbox-modal__auth-input js-password-input">
 <label class="lightbox-modal__auth-label" for="auth-password">Password</label>
+<button id="js-password-reset" class="lightbox-modal__auth-reset-btn">Forgot your password?</button>
 </div>
+
 <div class="lightbox-modal__buttons lightbox-modal__auth-buttons">
 
 <div class="auth-login-btn-wrapper">
@@ -95,6 +98,8 @@ export function onSignInBtnClick(event) {
     'js-signInWithGoogleBtn'
   );
   singInWithGoogleBtnEl.addEventListener('click', onSignInWithGoogleBtnClick);
+  const resetPasswordBtn = document.getElementById('js-password-reset');
+  resetPasswordBtn.addEventListener('click', onResetPasswordClick);
 }
 
 function onCreateUserBtnClick(event) {
@@ -118,4 +123,11 @@ function onSingInBtnClick(event) {
 function onSignInWithGoogleBtnClick(event) {
   event.preventDefault();
   instance.signInWithPopupGoogle();
+}
+
+function onResetPasswordClick(event) {
+  event.preventDefault();
+  const emailInputEl = document.querySelector('.js-email-input');
+  const userEmail = emailInputEl.value.trim();
+  instance.sendPasswordResetEmail(userEmail);
 }

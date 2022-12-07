@@ -10,6 +10,7 @@ import {
   signInWithRedirect,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from 'firebase/auth';
 import {
   getDatabase,
@@ -148,6 +149,22 @@ class firebaseAPI {
         );
       }
       const errorMessage = error.message;
+      console.log(errorMessage);
+    } finally {
+      spinnerStop();
+    }
+  }
+
+  async sendPasswordResetEmail(email) {
+    try {
+      spinnerPlay();
+      sendPasswordResetEmail(this.firebaseAuth, email).then(() => {
+        Notify.info('Password reset email sent! Please check your mailbox');
+      });
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      Notify.failure('Something went wrong, please try again');
       console.log(errorMessage);
     } finally {
       spinnerStop();
