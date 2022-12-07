@@ -47,6 +47,7 @@
   justify-content: center;
 }
 
+.auth-login-notify,
 .auth-create-notify,
 .auth-google-notify {
   z-index: 1000;
@@ -64,20 +65,32 @@
   font-size: 14px;
   line-height: 1.33;
   color: $secondary-text-color;
-  //   background-color: rgba(203, 201, 98, 0.2);
+  //   background-color: rgba(255, 139, 72, 0.2);
   border: 1px solid $accent-color;
   border-radius: 10px;
   box-shadow: 0 0 10em 1em rgba(255, 139, 72, 0.6);
   @include transition(opacity);
 }
 
+.auth-login-notify {
+  bottom: 0;
+  left: 0;
+  transform: translate(-101%, 99%);
+  //   transform: translateX(-100%);
+}
+
 .auth-inputs-wrapper {
   margin-top: 20px;
+  gap: 8px;
   align-self: flex-end;
   flex-direction: column;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+.auth-login-btn-wrapper {
+  position: relative;
 }
 
 .auth-create-btn-wrapper {
@@ -146,14 +159,19 @@
       opacity: 1;
     }
   }
+
+  .auth-login-btn-wrapper {
+    position: relative;
+
+    &:hover > .auth-login-notify,
+    &:focus > .auth-login-notify {
+      opacity: 1;
+    }
+  }
 }
 
 @media screen and (min-width: $desktop) {
   .lightbox-auth-modal {
     padding: 0 40px;
-  }
-
-  .lightbox-modal__form-wrapper {
-    // padding: 0 40px;
   }
 }

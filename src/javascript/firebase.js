@@ -89,6 +89,7 @@ class firebaseAPI {
 
   async createUserWithEmailAndPassword(email, password) {
     try {
+      spinnerPlay();
       const userCredential = await createUserWithEmailAndPassword(
         this.firebaseAuth,
         email,
@@ -100,7 +101,6 @@ class firebaseAPI {
       user.displayName
         ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
         : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
-      // ...
     } catch (error) {
       const errorCode = error.code;
       if (errorCode === 'auth/weak-password') {
@@ -117,40 +117,45 @@ class firebaseAPI {
 
       const errorMessage = error.message;
       console.log(errorMessage);
-      // ..
+    } finally {
+      spinnerStop();
     }
   }
 
   async signInWithEmailAndPassword(email, password) {
-    signInWithEmailAndPassword(this.firebaseAuth, email, password)
-      .then(userCredential => {
-        // Signed in
-        const user = userCredential.user;
-        console.log(user);
-        user.displayName
-          ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
-          : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
-        // ...
-      })
-      .catch(error => {
-        const errorCode = error.code;
-        if (errorCode === 'auth/wrong-password') {
-          Notify.failure(`Oops, wrong password!`);
-        }
-        if (errorCode === 'auth/user-not-found') {
-          Notify.failure(`Hmm.. This user does not exist`);
-        }
-        if (errorCode === 'auth/invalid-email') {
-          Notify.failure(`Please enter valid email`);
-        }
-        if (errorCode === 'auth/too-many-requests') {
-          Notify.failure(
-            'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.'
-          );
-        }
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    try {
+      spinnerPlay();
+      const userCredential = await signInWithEmailAndPassword(
+        this.firebaseAuth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      user.displayName
+        ? (refs.userStatusEl.textContent = `Hello, ${user.displayName}`)
+        : (refs.userStatusEl.textContent = `Hello, ${user.email}`);
+    } catch (error) {
+      const errorCode = error.code;
+      if (errorCode === 'auth/wrong-password') {
+        Notify.failure(`Oops, wrong password!`);
+      }
+      if (errorCode === 'auth/user-not-found') {
+        Notify.failure(`Hmm.. This user does not exist`);
+      }
+      if (errorCode === 'auth/invalid-email') {
+        Notify.failure(`Please enter valid email`);
+      }
+      if (errorCode === 'auth/too-many-requests') {
+        Notify.failure(
+          'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.'
+        );
+      }
+      const errorMessage = error.message;
+      console.log(errorMessage);
+    } finally {
+      spinnerStop();
+    }
   }
 
   async signInWithPopupGoogle() {
