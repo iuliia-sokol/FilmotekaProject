@@ -17,11 +17,6 @@
   fill: none;
 }
 
-// .auth-logo-icon {
-//   fill: black;
-//   stroke: black;
-// }
-
 .auth-logo-text {
   display: block;
   font-weight: 500;
@@ -41,8 +36,9 @@
   display: flex;
   flex-wrap: wrap;
   flex-basis: 40%;
+  gap: 16px;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   flex-direction: column;
   margin: 0 auto;
 }
@@ -51,11 +47,13 @@
   justify-content: center;
 }
 
-.auth-create-notify {
+.auth-create-notify,
+.auth-google-notify {
+  z-index: 1000;
   opacity: 0;
   position: absolute;
-  top: 0;
-  transform: translateY(-100%);
+  bottom: 0;
+  transform: translateY(100%);
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -73,8 +71,32 @@
   @include transition(opacity);
 }
 
+.auth-inputs-wrapper {
+  margin-top: 20px;
+  align-self: flex-end;
+  flex-direction: column;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 .auth-create-btn-wrapper {
   position: relative;
+  z-index: 1;
+}
+
+.auth-google-btn-wrapper {
+  z-index: 1;
+  align-self: center;
+  position: relative;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+}
+
+.lightbox-modal__button-img {
+  width: 36px;
+  height: 36px;
 }
 
 .lightbox-modal__auth-label {
@@ -115,6 +137,15 @@
       opacity: 1;
     }
   }
+
+  .auth-google-btn-wrapper {
+    position: relative;
+
+    &:hover > .auth-google-notify,
+    &:focus > .auth-google-notify {
+      opacity: 1;
+    }
+  }
 }
 
 @media screen and (min-width: $desktop) {
@@ -123,6 +154,6 @@
   }
 
   .lightbox-modal__form-wrapper {
-    padding: 0 40px;
+    // padding: 0 40px;
   }
 }
