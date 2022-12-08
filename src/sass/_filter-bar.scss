@@ -34,6 +34,7 @@
   &__icon {
     width: 20px;
     height: 20px;
+    fill: $primary-text-color;
   }
 }
 
@@ -64,20 +65,21 @@
     display: inline-flex;
     width: 100%;
     gap: 4px;
-    background-color: hsla(35, 100%, 50%, 0.2);
+    background-color: hsla(35, 100%, 50%, 0.4);
     padding: 12px 10px;
     border: none;
     border-radius: 8px;
     outline: none;
     color: $primary-text-color;
-    text-shadow: 0.5px 0.5px 1px #0f0f0f, 0.5px -0.5px 0.5px #f00;
+    text-shadow: 0.5px 1.5px 1px #0f0f0f, 0.5px -0.5px 0.5px #f00;
     text-transform: uppercase;
     font-weight: 500;
     box-shadow: inset -1px -1px 3px white, inset 1px 1px 3px rgba(0, 0, 0, 0.1);
     transform: scale(1);
     @include transition(transform, box-shadow, color, background-color);
 
-    &:hover {
+    &:hover,
+    &:focus {
       background-color: rgba(84, 13, 81, 0.3);
       color: $primary-text-color;
       box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
@@ -170,5 +172,27 @@
     transform: translate(40%, 220%);
     // transform: translateX(-50%);
     //   margin-top: 20px;
+  }
+
+  .filters-show-button {
+    width: 30px;
+    height: 30px;
+    transform: translateY(200%) scale(1);
+    @include transition(transform, fill);
+
+    &:hover,
+    &:focus {
+      transform: translateY(200%) scale(1.1);
+    }
+
+    &:hover > svg,
+    &:focus > svg {
+      fill: $accent-color;
+    }
+
+    &__icon {
+      width: 30px;
+      height: 30px;
+    }
   }
 }
