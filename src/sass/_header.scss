@@ -32,6 +32,10 @@
   }
 }
 
+.container--header {
+  position: relative;
+}
+
 .header-wraper {
   display: flex;
   justify-content: space-between;

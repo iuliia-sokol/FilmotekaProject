@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { save, load } from './localStorageUse';
 
 axios.defaults.baseURL = 'https://api.themoviedb.org/3';
 
@@ -11,7 +12,13 @@ export class ThemoviedbAPI {
   constructor() {
     this.WATCH_KEY = 'watched';
     this.QUEUE_KEY = 'queue';
+
+    this.filterParams = {
+      // sort_by: 'vote_average.desc',
+      // ['vote_count.gte']: 10,
+    };
   }
+
   async fetchFavouritesMovies(page) {
     const params = new URLSearchParams({
       api_key: this.#API_KEY,
@@ -47,6 +54,24 @@ export class ThemoviedbAPI {
     });
   }
 
+  async fetchFiltered(page) {
+    const filters = load('filters');
+    let filtersForFetch = {};
+    filters.forEach(filter => {
+      const [filterName, filterValue] = Object.entries(filter)[0];
+      filtersForFetch[filterName] = filterValue;
+    });
+    this.filterParams = filtersForFetch;
+
+    const params = new URLSearchParams({
+      api_key: this.#API_KEY,
+      page: page,
+      ...this.filterParams,
+    });
+    const { data } = await axios.get('discover/movie', { params });
+    return data;
+  }
+
   async fetchTrailerById(id) {
     const params = new URLSearchParams({
       api_key: this.#API_KEY,
@@ -67,7 +92,7 @@ export class ThemoviedbAPI {
     });
     const allGenres = await axios.get('/genre/movie/list', { params });
     this.genres = allGenres.data.genres;
-
+    // console.log(allGenres);
     return allGenres;
   }
 }

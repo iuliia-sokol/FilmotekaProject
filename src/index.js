@@ -12,6 +12,7 @@ import { scrollFunction } from './javascript/scroll';
 import { renderGenres } from './javascript/renderGenres';
 import { paginOptions, paginOptionsLess } from './javascript/paginOptions';
 import firebaseAPI from './javascript/firebase';
+import { save, load } from './javascript/localStorageUse';
 
 const themoviedbAPI = new ThemoviedbAPI();
 export let allProducts = null;
@@ -36,7 +37,13 @@ try {
   spinnerStop();
 }
 
+refs.filterForm.addEventListener('submit', onFilterFormSubmit);
 refs.formEl.addEventListener('submit', onSearchFormSubmit);
+refs.filterGenres.addEventListener('change', onFilterChange);
+refs.filterLanguage.addEventListener('change', onFilterChange);
+refs.filterYears.addEventListener('change', onFilterChange);
+refs.filtersSort.addEventListener('change', onFilterChange);
+
 pagination.on('beforeMove', loadMoreFavouritesMovies);
 
 pagination.on('afterMove', () => {
@@ -46,6 +53,7 @@ pagination.on('afterMove', () => {
 async function startPage() {
   const genresIds = await themoviedbAPI.fetchGenres();
   const trendMovies = await themoviedbAPI.fetchFavouritesMovies(page);
+  save('filters', []);
 
   pagination.reset(trendMovies.total_results);
 
@@ -165,10 +173,11 @@ const STORAGE_KEY = 'themeKey';
 const checkBox = document.querySelector('.theme-switch__toggle');
 const body = document.querySelector('body');
 
-checkBox.addEventListener('change', onChange);
+checkBox.addEventListener('change', onThemeChange);
+
 isTheme();
 
-function onChange(e) {
+function onThemeChange(e) {
   if (e.target.checked) {
     body.classList.remove('ligth-theme');
     body.classList.add('dark-theme');
@@ -191,5 +200,84 @@ function isTheme() {
       body.classList.add('dark-theme');
       checkBox.checked = true;
     }
+  }
+}
+
+function onFilterChange(e) {
+  // console.log(e);
+  const form = e.target.closest('.js-filters-form');
+  let filters = [];
+  for (let i = 0; i < form.elements.length; i += 1) {
+    if (form[i].name && form[i].value) {
+      filters.push({ [form[i].name]: form[i].value });
+    }
+  }
+  // console.log('filters to save', filters);
+  save('filters', filters);
+}
+
+async function onFilterFormSubmit(e) {
+  e.preventDefault();
+  refs.gallery.innerHTML = '';
+  try {
+    spinnerPlay();
+    const searchMovies = await themoviedbAPI.fetchFiltered(page);
+    const markup = searchMovies.results
+      .map(movie => {
+        const genres = renderGenres(movie, [...themoviedbAPI.genres]);
+        return renderMarkup(movie, genres);
+      })
+      .join('');
+    refs.gallery.innerHTML = markup;
+    allProducts = [...getItems(refs.gallery)];
+
+    pagination.off('beforeMove', loadMoreFavouritesMovies);
+    pagination.off('beforeMove', loadMoreMoviesByQuery);
+    pagination.on('beforeMove', loadMoreFilteredMovies);
+    pagination.reset(searchMovies.total_results);
+
+    refs.noResultsTitle.classList.add('visually-hidden');
+    refs.noResultsImg.classList.add('visually-hidden');
+    refs.gallerySection.classList.remove('gallery-section--hidden');
+    refs.btnUpWrapper.classList.remove('visually-hidden');
+
+    if (searchMovies.results.length === 0) {
+      Notify.failure('Oops, no movies found');
+      refs.noResultsTitle.classList.remove('visually-hidden');
+      refs.noResultsImg.classList.remove('visually-hidden');
+      refs.gallerySection.classList.add('gallery-section--hidden');
+      refs.btnUpWrapper.classList.add('visually-hidden');
+      refs.paginationContainer.style.display = 'none';
+    } else {
+      refs.paginationContainer.style.display = 'block';
+    }
+    // save('filters', []);
+    // e.target.reset();
+  } catch (error) {
+    Notify.failure('Oops, something went wrong');
+    console.log(error);
+  } finally {
+    spinnerStop();
+  }
+}
+
+async function loadMoreFilteredMovies(event) {
+  const currentPage = event.page;
+  try {
+    spinnerPlay();
+    const searchMovies = await themoviedbAPI.fetchFiltered(currentPage);
+    const markup = searchMovies.results
+      .map(movie => {
+        const genres = renderGenres(movie, [...themoviedbAPI.genres]);
+        return renderMarkup(movie, genres);
+      })
+      .join('');
+
+    refs.gallery.innerHTML = markup;
+    allProducts = [...getItems(refs.gallery)];
+  } catch (error) {
+    Notify.failure('Ооps, something went wrong, please try again');
+  } finally {
+    spinnerStop();
   }
 }
