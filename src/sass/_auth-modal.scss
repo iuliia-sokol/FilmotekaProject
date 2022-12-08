@@ -181,7 +181,7 @@
 
 @media screen and (min-width: $tablet) {
   .lightbox-auth-modal {
-    overflow-x: visible;
+    overflow-x: hidden;
   }
 
   .lightbox-modal__auth-buttons {
@@ -204,6 +204,11 @@
   .auth-logo-link {
     position: relative;
     transform: translateX(0);
+  }
+
+  .lightbox-modal__form-wrapper {
+    margin-bottom: 30px;
+    margin-right: 10px;
   }
 }
 
