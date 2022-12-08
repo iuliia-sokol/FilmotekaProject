@@ -229,6 +229,7 @@
     // margin-right: 20px;
     padding: 6px;
     border-radius: 5px;
+    border: 1.5px solid black;
     text-transform: uppercase;
     background-color: transparent;
     font-weight: 500;
@@ -254,7 +255,6 @@
       line-height: 1.33;
       transform: scale(1);
       @include transition(transform);
-
       border: none;
       background-color: $accent-color;
       color: $primary-text-color;

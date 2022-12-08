@@ -220,12 +220,12 @@ class firebaseAPI {
     }
     onAuthStateChanged(this.firebaseAuth, user => {
       if (user) {
-        const myTimeout = setTimeout(
-          user.displayName
-            ? Notify.info(`Welcome back, ${user.displayName}`)
-            : Notify.info(`Welcome back, ${user.email}`),
-          5000
-        );
+        // const myTimeout = setTimeout(
+        //   user.displayName
+        //     ? Notify.info(`Welcome back, ${user.displayName}`)
+        //     : Notify.info(`Welcome back, ${user.email}`),
+        //   5000
+        // );
         this.userId = user.uid;
         refs.signOutBtnEl.classList.remove('visually-hidden');
         refs.signInBtnEl.classList.add('visually-hidden');
