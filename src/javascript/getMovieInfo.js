@@ -5,16 +5,6 @@ export const getOneMovieInfo = movieInfo => {
     ? `https://image.tmdb.org/t/p/w500${movieInfo.poster_path}`
     : `https://astoriamuseums.org/wp-content/uploads/2020/10/OFM-poster-not-available.png`;
 
-  if (
-    movieInfo?.vote_count < 10 &&
-    (movieInfo?.original_title.charCodeAt(0) > 12000 ||
-      movieInfo?.original_title.charCodeAt(
-        movieInfo?.original_title.length - 1
-      ) > 12000)
-  ) {
-    posterUrl = `${korean}`;
-  }
-
   let genres = [];
 
   movieInfo.genres.forEach(genre => {
