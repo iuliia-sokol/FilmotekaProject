@@ -181,7 +181,7 @@
 
 @media screen and (min-width: $tablet) {
   .lightbox-auth-modal {
-    overflow: hidden;
+    overflow-x: visible;
   }
 
   .lightbox-modal__auth-buttons {
@@ -204,6 +204,22 @@
   .auth-logo-link {
     position: relative;
     transform: translateX(0);
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .lightbox-auth-modal {
+    padding: 0 60px;
+    overflow: visible;
+  }
+
+  .auth-logo-container {
+    // margin-top: 0;
+    transform: translate(-50px, 10px);
+  }
+
+  .auth-logo-link {
+    transform: translateY(20px);
   }
 
   .auth-create-btn-wrapper {
@@ -231,20 +247,5 @@
     &:focus > .auth-login-notify {
       opacity: 1;
     }
-  }
-}
-
-@media screen and (min-width: $desktop) {
-  .lightbox-auth-modal {
-    padding: 0 60px;
-  }
-
-  .auth-logo-container {
-    // margin-top: 0;
-    transform: translate(-50px, 10px);
-  }
-
-  .auth-logo-link {
-    transform: translateY(20px);
   }
 }
