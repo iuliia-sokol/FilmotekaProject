@@ -20,4 +20,6 @@ export const refs = {
   filterLanguage: document.querySelector('.js-filter-language'),
   filterGenres: document.querySelector('.js-filter-genres'),
   filtersSort: document.querySelector('.js-filter-sort'),
+  filterShowBtn: document.querySelector('.js-filterShow-btn'),
+  filterBar: document.querySelector('.header__filter-bar'),
 };

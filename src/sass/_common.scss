@@ -63,6 +63,7 @@ a:not([class]) {
   }
 
   @media screen and (min-width: $desktop) {
+    margin: 0 auto;
     width: $desktop;
     padding: 0 32px;
   }
@@ -79,4 +80,10 @@ a:not([class]) {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
   margin: -1px;
+}
+
+.blur {
+  opacity: 0.2;
+  // color: transparent;
+  // text-shadow: 0 0 3px #000;
 }

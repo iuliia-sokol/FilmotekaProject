@@ -1,32 +1,68 @@
 .header__filter-bar {
+  width: 100%;
   position: absolute;
   bottom: 0;
   left: 0;
-  transform: translateY(220%);
+  transform: translateY(145%);
+  z-index: 10000;
   //   margin-top: 20px;
-  //   outline: 1px solid lime;
+}
+
+.header__filter-bar-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+
+  @media screen and (min-width: $mobile) {
+    width: $mobile;
+  }
+
+  @media screen and (min-width: $tablet) {
+    width: $tablet;
+    padding: 0 32px;
+  }
+}
+
+.filters-show-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translateY(370%);
+  background-color: transparent;
+  border: none;
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .header__filter-bar-form {
-  display: flex;
+  //   background-color: hsla(35, 100%, 50%, 0.5);
+  display: inline-flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 16px;
 }
 
 .filters {
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
+  //   flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: stretch;
   gap: 6px;
 
   &__list {
+    display: inline-flex;
+    width: calc(50% - 4px);
     background-color: transparent;
-    // padding: 12px 6px;
   }
 
   &__item {
     background-color: transparent;
-    display: flex;
+    display: inline-flex;
+    width: 100%;
     gap: 4px;
     background-color: hsla(35, 100%, 50%, 0.2);
     padding: 12px 10px;
@@ -91,5 +127,48 @@
   &__icon {
     fill: $primary-text-color;
     margin-right: 6px;
+  }
+}
+
+@media screen and (min-width: $tablet) {
+  .header__filter-bar {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    transform: translate(5%, 220%);
+  }
+
+  .filters-show-button {
+    width: 30px;
+    height: 30px;
+    transform: translateY(200%);
+
+    &__icon {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .header__filter-bar-form {
+    flex-direction: row;
+  }
+
+  .filters {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    &__list {
+      width: fit-content;
+      // padding: 12px 6px;
+    }
+  }
+}
+
+@media screen and (min-width: $desktop) {
+  .header__filter-bar {
+    transform: translate(40%, 220%);
+    // transform: translateX(-50%);
+    //   margin-top: 20px;
   }
 }

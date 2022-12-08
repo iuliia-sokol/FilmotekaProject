@@ -43,6 +43,7 @@ refs.filterGenres.addEventListener('change', onFilterChange);
 refs.filterLanguage.addEventListener('change', onFilterChange);
 refs.filterYears.addEventListener('change', onFilterChange);
 refs.filtersSort.addEventListener('change', onFilterChange);
+refs.filterShowBtn.addEventListener('click', onFilterShowBtnClick);
 
 pagination.on('beforeMove', loadMoreFavouritesMovies);
 
@@ -251,6 +252,9 @@ async function onFilterFormSubmit(e) {
     } else {
       refs.paginationContainer.style.display = 'block';
     }
+
+    refs.filterBar.classList.add('is-hidden');
+    document.querySelector('main').classList.remove('blur');
     // save('filters', []);
     // e.target.reset();
   } catch (error) {
@@ -280,4 +284,9 @@ async function loadMoreFilteredMovies(event) {
   } finally {
     spinnerStop();
   }
+}
+
+function onFilterShowBtnClick(e) {
+  refs.filterBar.classList.toggle('is-hidden');
+  document.querySelector('main').classList.toggle('blur');
 }
