@@ -1,5 +1,7 @@
 .lightbox-auth-modal {
+  height: fit-content;
   align-items: center;
+  overflow-x: hidden;
   //   gap: 60px;
 }
 
@@ -11,9 +13,28 @@
 }
 
 .auth-logo-container {
+  // margin-top: 20px;
+  // transform: translateY(15px);
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
   display: flex;
+  flex-direction: row-reverse;
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
+}
+
+.auth-logo-animated-img {
+  display: block;
+  // position: absolute;
+  width: 60%;
+  z-index: -1;
+  transform: translateX(90px);
+}
+
+.auth-logo-link {
+  position: absolute;
+  transform: translateX(-25px);
 }
 
 .auth-logo {
@@ -60,6 +81,8 @@
 
 .lightbox-modal__auth-buttons {
   justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .auth-login-notify,
@@ -157,6 +180,32 @@
 }
 
 @media screen and (min-width: $tablet) {
+  .lightbox-auth-modal {
+    overflow: hidden;
+  }
+
+  .lightbox-modal__auth-buttons {
+    flex-wrap: nowrap;
+  }
+
+  .auth-logo-container {
+    // margin-top: 0;
+    // transform: translateY(0);
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+
+  .auth-logo-animated-img {
+    width: 100%;
+    position: relative;
+    transform: translateX(0);
+  }
+
+  .auth-logo-link {
+    position: relative;
+    transform: translateX(0);
+  }
+
   .auth-create-btn-wrapper {
     position: relative;
 
@@ -188,5 +237,14 @@
 @media screen and (min-width: $desktop) {
   .lightbox-auth-modal {
     padding: 0 60px;
+  }
+
+  .auth-logo-container {
+    // margin-top: 0;
+    transform: translate(-50px, 10px);
+  }
+
+  .auth-logo-link {
+    transform: translateY(20px);
   }
 }

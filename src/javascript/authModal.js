@@ -8,11 +8,12 @@ export function onSignInBtnClick(event) {
   const modal = basicLightbox.create(
     `
    <div class="lightbox-modal lightbox-auth-modal">
-       <div class="logo-container logo-auth-container">
-        <a href="./index.html" class="logo-site">
+       <div class="logo-container auth-logo-container">
+        <a href="./index.html" class="logo-site auth-logo-link">
           <svg class="auth-logo" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.82 2.704H4.18C2.976 2.704 2 3.634 2 4.78v14.892c0 1.146.976 2.076 2.18 2.076h15.64c1.204 0 2.18-.93 2.18-2.076V4.78c0-1.146-.976-2.076-2.18-2.076ZM7 2.704v19.044M17 2.704v19.044M2 12.226h20M2 7.465h5M2 16.987h5M17 16.987h5M17 7.465h5"/></svg>
           <span class="auth-logo-text">Filmoteka</span>
         </a>
+       <img class="lightbox-modal__animated-img auth-logo-animated-img" alt="movie camera" width="100%" srcset="https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 320w, https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 400w, https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 450w, https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 640w, https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 700w, https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 800w, https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif 768w" sizes="(max-width: 919px) 100vw, max(768px, 98vh)" src="https://cdn.dribbble.com/users/1138931/screenshots/5740681/media/26c6634bdd9cdea518e87d66dca2d655.gif">
       </div>
 
    <button
