@@ -3,7 +3,7 @@ export const getOneMovieInfo = movieInfo => {
   const title = movieInfo?.title;
   let posterUrl = movieInfo?.poster_path
     ? `https://image.tmdb.org/t/p/w500${movieInfo.poster_path}`
-    : `https://astoriamuseums.org/wp-content/uploads/2020/10/OFM-poster-not-available.png`;
+    : `https://m.media-amazon.com/images/M/MV5BMTRkZGE0YWYtMDFhOS00N2I4LTljMTMtYjk0MTI2YmVhOTU4XkEyXkFqcGdeQXVyNjgxNzM0NDI@._V1_.jpg`;
 
   let genres = [];
 
@@ -22,6 +22,6 @@ export const getOneMovieInfo = movieInfo => {
   if (movieInfo?.vote_average) {
     vote_average = movieInfo.vote_average.toFixed(2);
   }
-  const noImage = `https://astoriamuseums.org/wp-content/uploads/2020/10/OFM-poster-not-available.png`;
+  const noImage = `https://m.media-amazon.com/images/M/MV5BMTRkZGE0YWYtMDFhOS00N2I4LTljMTMtYjk0MTI2YmVhOTU4XkEyXkFqcGdeQXVyNjgxNzM0NDI@._V1_.jpg`;
   return { title, posterUrl, genres, year, id, noImage, vote_average };
 };

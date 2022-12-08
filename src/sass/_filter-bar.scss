@@ -77,9 +77,14 @@
     &:focus {
       border: none;
       //   background-color: $accent-color;
-      //   color: $primary-text-color;
+      color: $accent-color;
       //   box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
       transform: scale(1.1);
+    }
+
+    &:hover > svg,
+    &:focus > svg {
+      fill: $accent-color;
     }
   }
 

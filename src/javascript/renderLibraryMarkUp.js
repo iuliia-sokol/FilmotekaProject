@@ -3,7 +3,7 @@ export function renderLibraryMarkup(data, genres) {
   const votes = vote_average.toFixed(1);
   const posterPath = data.poster_path
     ? `https://image.tmdb.org/t/p/w300${poster_path}`
-    : `https://astoriamuseums.org/wp-content/uploads/2020/10/OFM-poster-not-available.png`;
+    : `https://m.media-amazon.com/images/M/MV5BMTRkZGE0YWYtMDFhOS00N2I4LTljMTMtYjk0MTI2YmVhOTU4XkEyXkFqcGdeQXVyNjgxNzM0NDI@._V1_.jpg`;
   const releaseYear = new Date(Date.parse(release_date)).getFullYear() || '';
 
   return `<li class="gallery__item gallery__item--library movie-card" data-id="${id}">

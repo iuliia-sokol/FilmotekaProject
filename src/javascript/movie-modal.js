@@ -52,7 +52,7 @@ async function onFilmCardClick(event) {
 
       const posterPath = data.poster_path
         ? `https://image.tmdb.org/t/p/w300${data.poster_path}`
-        : `https://astoriamuseums.org/wp-content/uploads/2020/10/OFM-poster-not-available.png`;
+        : `https://m.media-amazon.com/images/M/MV5BMTRkZGE0YWYtMDFhOS00N2I4LTljMTMtYjk0MTI2YmVhOTU4XkEyXkFqcGdeQXVyNjgxNzM0NDI@._V1_.jpg`;
       const releaseYear = new Date(Date.parse(data.release_date)).getFullYear();
 
       const filmData = {
