@@ -34,6 +34,8 @@ export class ThemoviedbAPI {
       api_key: this.#API_KEY,
       query: this.query,
       page: page,
+      // language: '',
+      // primary_release_year: ''
     });
 
     const { data } = await axios.get('/search/movie', { params });
@@ -54,9 +56,26 @@ export class ThemoviedbAPI {
     });
   }
 
+  // async turnKeywordToId() {
+  //   const filters = load('filters');
+  //   const keywordFilter = filters.find(el => el['with_keywords']);
+  //   const keywordToDFind = Object.values(keywordFilter).toString();
+  //   console.log(keywordToDFind);
+
+  //   const params = new URLSearchParams({
+  //     api_key: this.#API_KEY,
+  //     query: keywordToDFind,
+  //   });
+
+  //   const data = await axios.get('/search/keyword', { params });
+  //   console.log(data);
+  // }
+
   async fetchFiltered(page) {
     const filters = load('filters');
     let filtersForFetch = {};
+    // console.dir(filters);
+
     filters.forEach(filter => {
       const [filterName, filterValue] = Object.entries(filter)[0];
       filtersForFetch[filterName] = filterValue;
@@ -92,7 +111,6 @@ export class ThemoviedbAPI {
     });
     const allGenres = await axios.get('/genre/movie/list', { params });
     this.genres = allGenres.data.genres;
-    // console.log(allGenres);
     return allGenres;
   }
 }

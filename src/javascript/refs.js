@@ -17,6 +17,7 @@ export const refs = {
   userStatusEl: document.querySelector('.js-userStatus'),
 
   filterForm: document.querySelector('.js-filters-form'),
+  filterKeyword: document.querySelector('.js-filter-keyword'),
   filterYears: document.querySelector('.js-filter-years'),
   filterLanguage: document.querySelector('.js-filter-language'),
   filterGenres: document.querySelector('.js-filter-genres'),

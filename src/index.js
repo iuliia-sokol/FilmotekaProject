@@ -41,6 +41,7 @@ try {
 
 refs.filterForm.addEventListener('submit', onFilterFormSubmit);
 refs.formEl.addEventListener('submit', onSearchFormSubmit);
+// refs.filterKeyword.addEventListener('change', onFilterChange);
 refs.filterGenres.addEventListener('change', onFilterChange);
 refs.filterLanguage.addEventListener('change', onFilterChange);
 refs.filterYears.addEventListener('change', onFilterChange);
@@ -116,7 +117,7 @@ async function onSearchFormSubmit(event) {
     } else {
       refs.searchFailureText.classList.add('visually-hidden');
       refs.paginationContainer.style.display = 'block';
-      refs.filterShowBtn.style.display = 'block';
+      refs.filterShowBtn.style.display = 'none';
       refs.filterBar.style.display = 'block';
     }
   } catch (err) {
@@ -170,6 +171,8 @@ async function loadMoreMoviesByQuery(event) {
   }
 }
 
+// THEME
+
 const Theme = {
   LIGHT: 'light-theme',
   DARK: 'dark-theme',
@@ -210,16 +213,24 @@ function isTheme() {
   }
 }
 
+// FILTERS
+
 function onFilterChange(e) {
-  // console.log(e);
   const form = e.target.closest('.js-filters-form');
+
   let filters = [];
   for (let i = 0; i < form.elements.length; i += 1) {
     if (form[i].name && form[i].value) {
       filters.push({ [form[i].name]: form[i].value });
     }
   }
-  // console.log('filters to save', filters);
+
+  // console.log(filters);
+  // const keyword = filters.find(el => {
+  //   return el['with_keywords'];
+  // });
+  // console.log(keyword);
+
   save('filters', filters);
 }
 
@@ -228,7 +239,9 @@ async function onFilterFormSubmit(e) {
   refs.gallery.innerHTML = '';
   try {
     spinnerPlay();
+    // const ID = await themoviedbAPI.turnKeywordToId();
     const searchMovies = await themoviedbAPI.fetchFiltered(page);
+
     const markup = searchMovies.results
       .map(movie => {
         const genres = renderGenres(movie, [...themoviedbAPI.genres]);
@@ -260,7 +273,7 @@ async function onFilterFormSubmit(e) {
     }
 
     refs.filterBar.classList.add('is-hidden');
-    document.querySelector('main').classList.remove('blur');
+    refs.gallery.classList.remove('blur');
     // save('filters', []);
     // e.target.reset();
   } catch (error) {
@@ -317,6 +330,8 @@ function onFilterShowBtnClick(e) {
 
   refs.gallerySection.addEventListener('click', outOfFiltersClick);
 }
+
+// CUSTOM SELECT DROPBOX
 
 customSelect(
   document.querySelectorAll('.mySelect', {
