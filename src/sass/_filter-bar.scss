@@ -60,21 +60,21 @@
     background-color: transparent;
   }
 
-  &__item {
-    background-color: transparent;
-    display: inline-flex;
+  &__item,
+  .custom-select-opener,
+  .custom-select-option {
+    // display: inline-flex;
     width: 100%;
     min-height: 44px;
-    gap: 4px;
     background-color: hsla(35, 100%, 50%, 0.4);
     padding: 12px 6px;
     border: none;
     border-radius: 12px;
     outline: none;
-    color: $primary-text-color;
+    color: $secondary-text-color;
     text-align: center;
-    // font-size: 14px;
-    text-shadow: 0.5px 1.5px 1px #0f0f0f, 0.5px -0.5px 0.5px #f00;
+
+    // text-shadow: 0.5px 1.5px 1px #0f0f0f, 0.5px -0.5px 0.5px #f00;
     text-transform: uppercase;
     font-weight: 500;
     box-shadow: inset -1px -1px 3px white, inset 1px 1px 3px rgba(0, 0, 0, 0.1);
@@ -87,6 +87,22 @@
       color: $primary-text-color;
       box-shadow: -5px -5px 20px #fff, 5px 5px 20px #babecc;
       transform: scale(1.1);
+    }
+  }
+
+  .custom-select-opener {
+    font-weight: 600;
+    text-shadow: 1px 1px 1px hsla(36, 100%, 99%, 0.5);
+  }
+
+  .custom-select-option {
+    transform: scale(0.9);
+
+    &:hover,
+    &:focus {
+      transform: scale(1);
+      box-shadow: -1px -1px 20px #fff, 1px 1px 10px #babecc;
+      background-color: rgba(212, 4, 119, 0.3);
     }
   }
 
@@ -133,6 +149,17 @@
     fill: $primary-text-color;
     margin-right: 6px;
   }
+}
+
+.custom-select-opener {
+  background-color: transparent;
+}
+.custom-select-container {
+  background-color: transparent;
+  width: 100%;
+  min-width: 120px;
+
+  overflow-x: visible !important;
 }
 
 @media screen and (min-width: $tablet) {

@@ -1,6 +1,8 @@
 import Pagination from 'tui-pagination';
 import 'tui-pagination/dist/tui-pagination.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import customSelect from 'custom-select';
+import 'custom-select/build/custom-select.css';
 
 import { refs } from './javascript/refs';
 import { renderMarkup } from './javascript/renderMarkup';
@@ -288,3 +290,17 @@ function onFilterShowBtnClick(e) {
   refs.filterBar.classList.toggle('is-hidden');
   document.querySelector('main').classList.toggle('blur');
 }
+
+customSelect(
+  document.querySelectorAll('.mySelect', {
+    containerClass: 'custom-select-container',
+    openerClass: 'custom-select-opener',
+    panelClass: 'custom-select-panel',
+    optionClass: 'custom-select-option',
+    optgroupClass: 'custom-select-optgroup',
+    isSelectedClass: 'is-selected',
+    hasFocusClass: 'has-focus',
+    isDisabledClass: 'is-disabled',
+    isOpenClass: 'is-open',
+  })
+);

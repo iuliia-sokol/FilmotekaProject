@@ -422,6 +422,13 @@ body.main-bg.dark-theme {
     letter-spacing: 1.2px;
   }
 
+  &__item,
+  .custom-select-opener,
+  .custom-select-option {
+    color: $primary-text-color;
+    text-shadow: 0.5px 1.5px 1px #0f0f0f, 0.5px -0.5px 0.5px #f00;
+  }
+
   div ~ .tui-pagination .tui-page-btn {
     color: $primary-text-color;
     text-shadow: 0.5px 0.5px 1px #0f0f0f, 0.5px -0.5px 0.5px #f00;
