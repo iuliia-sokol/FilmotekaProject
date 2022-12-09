@@ -1,5 +1,5 @@
 import BigPicture from 'bigpicture';
-import { spinnerPlay, spinnerStop } from './spiner';
+import { spinnerPlay, spinnerStop } from './spinner';
 
 export function getTrailer(filmId, movieAPI) {
   try {

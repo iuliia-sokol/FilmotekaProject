@@ -24,7 +24,7 @@ import {
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { refs } from './refs';
 import { save, load } from './localStorageUse';
-import { spinnerPlay, spinnerStop } from './spiner';
+import { spinnerPlay, spinnerStop } from './spinner';
 import { ThemoviedbAPI } from './themoviedbAPI';
 import { onSignInBtnClick } from './authModal';
 // import { renderWatchedMovies, renderQueueMovies } from './library';

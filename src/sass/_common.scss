@@ -84,6 +84,7 @@ a:not([class]) {
 
 .blur {
   opacity: 0.2;
+  pointer-events: none;
   // color: transparent;
   // text-shadow: 0 0 3px #000;
 }

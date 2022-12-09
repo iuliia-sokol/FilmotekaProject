@@ -5,7 +5,7 @@ import { renderLibraryMarkup } from './renderLibraryMarkUp';
 import { ThemoviedbAPI } from './themoviedbAPI';
 import { scrollFunction } from './scroll';
 import { createModalMarkUp } from './renderModalMarkUp';
-import { spinnerPlay, spinnerStop } from './spiner';
+import { spinnerPlay, spinnerStop } from './spinner';
 import { load, removeLocal } from './localStorageUse';
 import { getTrailer } from './getTrailer';
 import { libraryFooterModalOpen } from './libraryFooterModalOpen';

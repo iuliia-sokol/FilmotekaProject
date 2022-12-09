@@ -6,7 +6,7 @@ import { refs } from './javascript/refs';
 import { renderMarkup } from './javascript/renderMarkup';
 import { ThemoviedbAPI } from './javascript/themoviedbAPI';
 import { getItems } from './javascript/movie-modal';
-import { spinnerPlay, spinnerStop } from './javascript/spiner';
+import { spinnerPlay, spinnerStop } from './javascript/spinner';
 import { callfooterModal } from './javascript/footerModal';
 import { scrollFunction } from './javascript/scroll';
 import { renderGenres } from './javascript/renderGenres';
@@ -15,7 +15,7 @@ import firebaseAPI from './javascript/firebase';
 import { save, load } from './javascript/localStorageUse';
 
 const themoviedbAPI = new ThemoviedbAPI();
-export let allProducts = null;
+export let allFilms = null;
 
 let options = null;
 if (window.screen.width <= 480) {
@@ -65,7 +65,7 @@ async function startPage() {
     })
     .join('');
   refs.gallery.innerHTML = markup;
-  allProducts = [...getItems(refs.gallery)];
+  allFilms = [...getItems(refs.gallery)];
 }
 
 async function onSearchFormSubmit(event) {
@@ -75,9 +75,6 @@ async function onSearchFormSubmit(event) {
     return '';
   }
   try {
-    if (document.querySelector('.input-error')) {
-      document.querySelector('.input-error').remove();
-    }
     spinnerPlay();
     const searchMovies = await themoviedbAPI.fetchMoviesByQuery(page);
     const markup = searchMovies.results
@@ -93,28 +90,29 @@ async function onSearchFormSubmit(event) {
     pagination.reset(searchMovies.total_results);
 
     refs.gallery.innerHTML = markup;
-    allProducts = [...getItems(refs.gallery)];
+    allFilms = [...getItems(refs.gallery)];
     refs.noResultsTitle.classList.add('visually-hidden');
     refs.noResultsImg.classList.add('visually-hidden');
     refs.gallerySection.classList.remove('gallery-section--hidden');
     refs.btnUpWrapper.classList.remove('visually-hidden');
 
     if (searchMovies.total_results === 0) {
-      refs.formEl.insertAdjacentHTML(
-        'afterend',
-        `<div class="input-error">
-       Search result not successful. Enter the correct movie name  
-      </div>`
-      );
+      refs.searchFailureText.classList.remove('visually-hidden');
       refs.noResultsTitle.classList.remove('visually-hidden');
       refs.noResultsImg.classList.remove('visually-hidden');
       refs.gallerySection.classList.add('gallery-section--hidden');
       refs.btnUpWrapper.classList.add('visually-hidden');
       refs.paginationContainer.style.display = 'none';
+      refs.filterShowBtn.style.display = 'none';
+      refs.filterBar.style.display = 'none';
     } else {
+      refs.searchFailureText.classList.add('visually-hidden');
       refs.paginationContainer.style.display = 'block';
+      refs.filterShowBtn.style.display = 'block';
+      refs.filterBar.style.display = 'block';
     }
   } catch (err) {
+    console.log(err);
     Notify.failure('Ооps, something went wrong, please try again');
   } finally {
     spinnerStop();
@@ -136,7 +134,7 @@ async function loadMoreFavouritesMovies(event) {
       })
       .join('');
     refs.gallery.innerHTML = markup;
-    allProducts = [...getItems(refs.gallery)];
+    allFilms = [...getItems(refs.gallery)];
   } catch (error) {
     Notify.failure('Ооps, something went wrong, please try again');
   } finally {
@@ -156,7 +154,7 @@ async function loadMoreMoviesByQuery(event) {
       })
       .join('');
     refs.gallery.innerHTML = markup;
-    allProducts = [...getItems(refs.gallery)];
+    allFilms = [...getItems(refs.gallery)];
   } catch (error) {
     Notify.failure('Ооps, something went wrong, please try again');
   } finally {
@@ -230,7 +228,7 @@ async function onFilterFormSubmit(e) {
       })
       .join('');
     refs.gallery.innerHTML = markup;
-    allProducts = [...getItems(refs.gallery)];
+    allFilms = [...getItems(refs.gallery)];
 
     pagination.off('beforeMove', loadMoreFavouritesMovies);
     pagination.off('beforeMove', loadMoreMoviesByQuery);
@@ -278,7 +276,7 @@ async function loadMoreFilteredMovies(event) {
       .join('');
 
     refs.gallery.innerHTML = markup;
-    allProducts = [...getItems(refs.gallery)];
+    allFilms = [...getItems(refs.gallery)];
   } catch (error) {
     Notify.failure('Ооps, something went wrong, please try again');
   } finally {
