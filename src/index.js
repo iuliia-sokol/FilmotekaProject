@@ -294,7 +294,28 @@ async function loadMoreFilteredMovies(event) {
 
 function onFilterShowBtnClick(e) {
   refs.filterBar.classList.toggle('is-hidden');
-  document.querySelector('main').classList.toggle('blur');
+  refs.gallery.classList.toggle('blur');
+
+  function onEscClick(event) {
+    if (event.code === 'Escape') {
+      window.removeEventListener('keydown', onEscClick);
+      refs.filterBar.classList.add('is-hidden');
+      refs.gallery.classList.remove('blur');
+    }
+  }
+
+  window.addEventListener('keydown', onEscClick);
+
+  function outOfFiltersClick(e) {
+    const filterBar = e.composedPath().includes(refs.filterBar);
+    if (!filterBar) {
+      refs.filterBar.classList.add('is-hidden');
+      refs.gallery.classList.remove('blur');
+      refs.gallerySection.removeEventListener('click', outOfFiltersClick);
+    }
+  }
+
+  refs.gallerySection.addEventListener('click', outOfFiltersClick);
 }
 
 customSelect(
