@@ -23,4 +23,6 @@ export const refs = {
   filtersSort: document.querySelector('.js-filter-sort'),
   filterShowBtn: document.querySelector('.js-filterShow-btn'),
   filterBar: document.querySelector('.header__filter-bar'),
+  filterBtn: document.querySelector('.js-filter-btn'),
+  dropBoxOpener: document.querySelectorAll('.filters__list'),
 };

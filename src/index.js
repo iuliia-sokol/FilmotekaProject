@@ -46,6 +46,12 @@ refs.filterLanguage.addEventListener('change', onFilterChange);
 refs.filterYears.addEventListener('change', onFilterChange);
 refs.filtersSort.addEventListener('change', onFilterChange);
 refs.filterShowBtn.addEventListener('click', onFilterShowBtnClick);
+refs.dropBoxOpener.forEach(el =>
+  el.addEventListener('focusin', onDropBoxShown)
+);
+refs.dropBoxOpener.forEach(el =>
+  el.addEventListener('focusout', onDropBoxHidden)
+);
 
 pagination.on('beforeMove', loadMoreFavouritesMovies);
 
@@ -304,3 +310,21 @@ customSelect(
     isOpenClass: 'is-open',
   })
 );
+
+function onDropBoxShown(e) {
+  const filterOpeners = refs.dropBoxOpener;
+  refs.filterBtn.classList.toggle('blur');
+
+  filterOpeners.forEach(el => {
+    if (el === e.currentTarget) {
+      return;
+    }
+    el.classList.toggle('blur');
+    return;
+  });
+}
+
+function onDropBoxHidden(e) {
+  refs.dropBoxOpener.forEach(el => el.classList.remove('blur'));
+  refs.filterBtn.classList.remove('blur');
+}

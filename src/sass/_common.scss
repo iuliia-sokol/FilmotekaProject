@@ -88,3 +88,7 @@ a:not([class]) {
   // color: transparent;
   // text-shadow: 0 0 3px #000;
 }
+
+.no-events {
+  pointer-events: none;
+}
