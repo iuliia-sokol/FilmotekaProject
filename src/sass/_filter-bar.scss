@@ -29,6 +29,7 @@
   transform: translateY(370%);
   background-color: transparent;
   border: none;
+  z-index: 2000000000;
 
   &__icon {
     width: 20px;
@@ -166,7 +167,7 @@
   .filters-show-button {
     width: 30px;
     height: 30px;
-    transform: translateY(200%);
+    transform: translateY(180%);
 
     &__icon {
       width: 30px;
@@ -200,7 +201,7 @@
   .filters-show-button {
     width: 30px;
     height: 30px;
-    transform: translateY(200%) scale(1);
+    transform: translateY(180%) scale(1);
     @include transition(transform, fill);
 
     &:hover,

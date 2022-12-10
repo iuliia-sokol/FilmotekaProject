@@ -22,26 +22,14 @@ import {
   onValue,
 } from 'firebase/database';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
+import { FIREBASE_CONFIG } from './consts';
 import { refs } from './refs';
 import { save, load } from './localStorageUse';
 import { spinnerPlay, spinnerStop } from './spinner';
-import { ThemoviedbAPI } from './themoviedbAPI';
+
 import { onSignInBtnClick } from './authModal';
 // import { renderWatchedMovies, renderQueueMovies } from './library';
-
-const themoviedbAPI = new ThemoviedbAPI();
-
-// Your web app's Firebase configuration
-const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyBglmuNVewy1l7IUbE5KW2_O5fvpVxdZxg',
-  authDomain: 'filmoteka-e29b5.firebaseapp.com',
-  databaseURL:
-    'https://filmoteka-e29b5-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: 'filmoteka-e29b5',
-  storageBucket: 'filmoteka-e29b5.appspot.com',
-  messagingSenderId: '444486444061',
-  appId: '1:444486444061:web:04353f02de3f72763252f4',
-};
 
 class firebaseAPI {
   constructor(signInBtnEl, logOutBtnEl) {
