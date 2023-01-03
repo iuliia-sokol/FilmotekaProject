@@ -28,7 +28,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  transform: translateY(370%);
+  transform: translateY(420%);
   background-color: transparent;
   border: none;
   padding: 0;
@@ -185,7 +185,6 @@
     width: 30px;
     height: 30px;
     transform: translateY(180%);
-    z-index: 10000;
 
     &__icon {
       width: 30px;
