@@ -93,6 +93,11 @@
     text-shadow: 1px 1px 1px hsla(36, 100%, 99%, 0.5);
   }
 
+  .custom-select-panel {
+    border-radius: 12px;
+    background-color: transparent;
+  }
+
   .custom-select-option {
     transform: scale(1);
     text-shadow: 1px 1px 1px hsla(36, 100%, 99%, 0.5);
