@@ -23,13 +23,16 @@
 }
 
 .filters-show-button {
+  width: 20px;
+  height: 20px;
   position: absolute;
   bottom: 0;
   left: 0;
   transform: translateY(370%);
   background-color: transparent;
   border: none;
-  z-index: 2000000000;
+  padding: 0;
+  z-index: 10000;
 
   &__icon {
     width: 20px;
@@ -182,6 +185,7 @@
     width: 30px;
     height: 30px;
     transform: translateY(180%);
+    z-index: 10000;
 
     &__icon {
       width: 30px;
