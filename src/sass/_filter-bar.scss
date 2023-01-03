@@ -96,16 +96,20 @@
   .custom-select-panel {
     border-radius: 12px;
     background-color: transparent;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 10px;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: wrap;
+    // gap: 10px;
     margin-top: 10px;
   }
 
   .custom-select-option {
     transform: scale(1);
     text-shadow: 1px 1px 1px hsla(36, 100%, 99%, 0.5);
+
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
 
     &:hover,
     &:focus {
