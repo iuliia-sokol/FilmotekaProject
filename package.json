@@ -3,9 +3,16 @@
   "version": "2.0.0",
   "description": "",
   "homepage": "https://iuliia-sokol.github.io/FilmotekaProject",
+  "source": "src/index.html",
+  "targets": {
+    "default": {
+      "distDir": "./output",
+      "publicUrl": "/FilmotekaProject/"
+    }
+  },
   "scripts": {
-    "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /FilmotekaProject/"
+    "start": "parcel --open --no-cache --port 7777",
+    "build": "parcel build"
   },
   "repository": {
     "type": "git",
