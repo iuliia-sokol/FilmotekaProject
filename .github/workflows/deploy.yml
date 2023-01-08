@@ -22,12 +22,9 @@ jobs:
         run: |
           npm ci
           npm run build 
-        env:
-         API_KEY: ${{secrets.API_KEY}}
-         FIREBASE_CONFIG: ${{secrets.FIREBASE_CONFIG}}
+          
 
       - name: Deploy 🚀
-
         uses: JamesIves/github-pages-deploy-action@4.1.0
         with:
           branch: gh-pages
