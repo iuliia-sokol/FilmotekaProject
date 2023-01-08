@@ -14,9 +14,7 @@ jobs:
         
       - name: Create .env
         run: |
-          touch .env
-          echo API_KEY = ${{secrets.API_KEY}}  >> .env
-          echo FIREBASE_CONFIG = ${{secrets.FIREBASE_CONFIG}}  >> .env
+          echo "${{ secrets.ENV_FILE }}" >> .env
           
          
       - name: Install and Build 🔧
