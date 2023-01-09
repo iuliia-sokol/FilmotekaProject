@@ -16,5 +16,5 @@ export const FIREBASE_CONFIG = {
   appId: process.env.appId,
 };
 
-console.log(FIREBASE_CONFIG);
-console.log(API_KEY);
+// console.log(FIREBASE_CONFIG);
+// console.log(API_KEY);
