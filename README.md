@@ -9,7 +9,7 @@ Team-project of the Go-IT Bootcamp 34 students (group 1, Javascript)
  The project is based on The Movie Database (TMDB) API (https://developers.themoviedb.org/3/getting-started/introduction).
 
 
- The project was initially created as a team project and later refactored by me.
+ The project was initially created as a team project (download presentating (Ukrainian): [https://github.com/iuliia-sokol/FilmotekaProject/raw/main/FilmotekaProject.pptx]) and later redeveloped by me.
 
 
  Some additional features and design solutions were added (user registration (via Firebase (https://firebase.google.com/)), movie filtering (using Custom-select for the dropbox customization (https://www.npmjs.com/package/custom-select)), secret API keys (using Dotenv (https://www.npmjs.com/package/dotenv)), light theme gradients).
