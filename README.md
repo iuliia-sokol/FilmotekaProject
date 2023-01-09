@@ -1,5 +1,5 @@
 # FilmotekaProject
-##Team-project of the Go-IT Bootcamp 34 students (group 1, Javascript)
+Team-project of the Go-IT Bootcamp 34 students (group 1, Javascript)
 
 
 ### The project was created using Parcel (https://parceljs.org/) and written on vanilla JS with some extra libs added.
